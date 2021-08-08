@@ -3,6 +3,7 @@
    --lightblue: #deebff;
    --grey: #f2f2f2;
    --black: #000000;
+   --padding: 0.5em;
 }
 
 body {
@@ -10,6 +11,10 @@ font-family: 'Raleway', sans-serif;
 margin: 0px 1.5rem 1rem 1.5rem;
 background-color: #fff;
 }
+
+body a {
+    text-decoration: none;
+        }
 
 header {
     display: flex;
@@ -57,6 +62,8 @@ input {
     font-size: 16px;
     padding: 1em;
     max-width: 14em;
+    border-top: 1px solid var(--grey);
+    border-bottom: 1px solid var(--grey);
 }
 
 .search-button {
@@ -134,4 +141,107 @@ input {
     margin-right: 5px;
     font-size: 12px;
 }
+
+
+.all-accomodations {
+    display: flex;
+    
+    
+}
+
+.search-results {
+margin-right: 2em;
+background-color: var(--grey);
+padding: 1rem 2rem 1rem 2rem;
+    border-radius: 1rem;
+    flex: 77%;
+    padding-left: calc(var(--padding) + 2rem);
+
+}
+.results-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.results-item {
+    border: 0.5em white solid;
+    background-color: white;
+    border-radius: 1em;
+    overflow: hidden;
+    flex: 14em;
+    margin-block: 0.5em;
+    margin-right: var(--padding);
+    max-width: 17em;
+    }
+
+ 
+
+.results-img-wrapper {
+    max-height: 125px;
+    overflow: hidden;
+}
+
+.results-item img {
+    max-width: -webkit-fill-available;
+    max-width: -moz-available;
+}
+
+.most-popular {
+    background-color: var(--grey);
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 1rem;
+   }
+
+.most-popular-item {
+    display: flex;
+    border: 0.5em white solid;
+    background-color: white;
+    border-radius: 1em;
+    overflow: hidden;
+    margin: 0.25em;
+    margin-bottom: 2.5em;
+}
+
+.popular-img {
+    width: 20em;
+    overflow: hidden;
+    position: relative;
+    margin-right: 1em;
+}
+
+.popular-img img {
+    width: 125%;
+    margin: -10px;
+}
+
+.popular-content {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    width: 100%;
+}
+
+.star-rating .fas {
+    color:var(--blue);
+}
+
+.star-rating .inactive {
+    color:var(--grey);
+}
+
+.all-accomodations h2 {
+    margin-bottom: 1.5em;
+}
+
+.show-more p {
+    margin-top: 3em;
+    font-weight: bold;
+}
+
+.box-shadow {
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.15); 
+box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.15);
+}
+
 
