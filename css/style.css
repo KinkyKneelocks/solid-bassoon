@@ -10,6 +10,8 @@ body {
 font-family: 'Raleway', sans-serif;
 margin: 0px 1.5rem 1rem 1.5rem;
 background-color: #fff;
+max-width: 1380px;
+    margin: auto;
 }
 
 body a {
@@ -44,6 +46,10 @@ color: var(--blue);
 
 h2 {
     margin-bottom: 0.15em;
+}
+
+section h2 {
+    margin-block: 4vh;
 }
 
 section p {
@@ -106,6 +112,12 @@ input {
     display: flex;
     height: 42px;  
     cursor:pointer; 
+    transition: 0.2s;
+}
+
+.filter-item:hover {
+    transform: scale(1.05);
+    border: 2px solid var(--grey);
 }
 
 .filter-icon {
@@ -161,7 +173,7 @@ padding: 1rem 2rem 1rem 2rem;
 .results-wrapper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .results-item {
@@ -170,7 +182,7 @@ padding: 1rem 2rem 1rem 2rem;
     border-radius: 1em;
     overflow: hidden;
     flex: 14em;
-    margin-block: 0.5em;
+    margin-bottom: 1em;
     margin-right: var(--padding);
     max-width: 17em;
     }
@@ -185,7 +197,12 @@ padding: 1rem 2rem 1rem 2rem;
 .results-item img {
     max-width: -webkit-fill-available;
     max-width: -moz-available;
-}
+    position: relative;
+    bottom: 25px;
+    }
+
+
+
 
 .most-popular {
     background-color: var(--grey);
@@ -208,11 +225,13 @@ padding: 1rem 2rem 1rem 2rem;
     overflow: hidden;
     position: relative;
     margin-right: 1em;
+    max-height: 10em;
 }
 
 .popular-img img {
-    width: 125%;
+    width: 128%;
     margin: -10px;
+    position:relative;
 }
 
 .popular-content {
@@ -235,7 +254,7 @@ padding: 1rem 2rem 1rem 2rem;
 }
 
 .show-more p {
-    margin-top: 3em;
+    margin-top: 6em;
     font-weight: bold;
 }
 
@@ -244,4 +263,85 @@ padding: 1rem 2rem 1rem 2rem;
 box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.15);
 }
 
+.activities {
+    display: flex;
+    justify-content: space-between;
+ 
+}
 
+.activities-section {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.activities img {
+    width: 116%;
+    height: -webkit-fill-available;
+    position: relative;
+}
+
+
+.activities-image {
+    overflow: hidden;
+    width: 18em;
+    border-radius: 1em;
+    margin-top: 1.5em;
+       }
+
+.activities .tall {
+    height: auto;
+}
+
+.activities .tall img {
+    width: auto;
+    height:566px;
+}
+
+.activity-content {
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+.activities-image-container {
+height: auto;
+max-height: 280px;
+overflow: hidden;
+}
+
+.activities .tall .activities-image-container {
+    max-height: 40em;
+}
+
+.move-up {
+    top:-100px;
+}
+
+.results-item .bottom {
+    bottom: 100px;
+}
+
+.more-bottom {
+    bottom: 150px !important;
+}
+
+.move-along {
+    width: 130% !important;
+    right: 45px;
+}
+
+footer {
+    font-size: 1em;
+    padding: 3em;
+    margin-top: 4.5em;
+    display: flex;
+    background-color: var(--grey);
+}
+
+footer div {
+    margin-right: 15rem;
+}
+
+footer strong {
+    font-size: 1em;
+
+}
