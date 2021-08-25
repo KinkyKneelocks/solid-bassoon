@@ -378,6 +378,20 @@ footer strong {
 
 }
 
+@media screen and (min-width:926px) {
+    header a p
+    {
+    margin-top: 2em;
+    }
+    header img {
+        margin-top: 1em;
+    }
+
+    header {
+        min-height: 6vh;
+    }
+    }
+
 @media screen and (max-width:1130px) {
     .all-accomodations {
         flex-direction: column-reverse;
