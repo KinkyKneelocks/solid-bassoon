@@ -440,6 +440,7 @@ footer strong {
 
     .activities-image {
         width: 100%;
+        max-width: 100%;
     }
 
   
