@@ -1,0 +1,10 @@
+.location {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(0deg, rgba(234,234,234,1) 0%, rgba(234,234,234,1) 90%, rgba(97,97,97,0.5) 100%);
+    
+    &__icon {
+        margin-right: 1em;
+        align-self: center;
+    }
+    }

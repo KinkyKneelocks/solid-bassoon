@@ -1,0 +1,37 @@
+.footer {
+    background-color: $gray-dark;
+    color: white;
+    padding: 1em;
+    text-decoration: none;
+
+    &__list {
+        list-style-type: none;
+         padding: 0em;
+         font-size: 1em;
+    }
+
+    &__icon {
+        width: 35%;
+        margin-block: 0.5em;
+    }
+
+    &__link {
+        margin-block: 1em;
+
+        &--bold {
+            font-weight: bold;
+        }
+
+        .fas {
+            width: 1.5em;
+        }
+    }
+
+    &__link a {
+        color: white;
+        text-decoration: none;
+        margin-block: 0.5em;
+    }
+
+    
+}
