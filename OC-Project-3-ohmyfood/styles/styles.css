@@ -275,6 +275,8 @@ header {
   -webkit-transform: rotate(-90deg);
           transform: rotate(-90deg);
   color: black;
+  position: relative;
+  top: 5px;
 }
 
 .top-wrapper {
@@ -444,17 +446,17 @@ header {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-transition: 1s;
-  transition: 1s;
+  -webkit-transition: 0.7s;
+  transition: 0.7s;
   margin-left: 0.5em;
 }
 
 .menu__card__button .fas {
-  -webkit-transform: rotate(-180deg);
-          transform: rotate(-180deg);
+  -webkit-transform: rotate(-270deg);
+          transform: rotate(-270deg);
   position: relative;
-  -webkit-transition: 1s;
-  transition: 1s;
+  -webkit-transition: 0.7s;
+  transition: 0.7s;
   left: 1.25em;
 }
 
@@ -464,8 +466,8 @@ header {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-transition: 1s;
-  transition: 1s;
+  -webkit-transition: 0.7s;
+  transition: 0.7s;
 }
 
 .menu__card__subtitle {
@@ -473,8 +475,8 @@ header {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-transition: 1s;
-  transition: 1s;
+  -webkit-transition: 0.7s;
+  transition: 0.7s;
   font-size: 0.85em;
   color: #353535;
 }
@@ -526,5 +528,15 @@ header {
 .menu__card--delay-3 {
   -webkit-animation-delay: calc(0.25s * 3);
           animation-delay: calc(0.25s * 3);
+}
+
+.menu__card--delay-4 {
+  -webkit-animation-delay: calc(0.25s * 4);
+          animation-delay: calc(0.25s * 4);
+}
+
+.menu__card--delay-5 {
+  -webkit-animation-delay: calc(0.25s * 5);
+          animation-delay: calc(0.25s * 5);
 }
 /*# sourceMappingURL=styles.css.map */
