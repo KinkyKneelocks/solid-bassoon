@@ -243,27 +243,6 @@
   transition: 0.4s;
 }
 
-body {
-  max-width: 385px;
-  font-family: "Roboto";
-  margin: 1em 0em 0em 0em;
-}
-
-.background-color {
-  background-color: #f6f6f6;
-  padding-bottom: 3.5em;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 1em;
-}
-
 .shop-header {
   padding-left: 1.5em;
   padding-right: 1.5em;
@@ -538,5 +517,199 @@ header {
 .menu__card--delay-5 {
   -webkit-animation-delay: calc(0.25s * 5);
           animation-delay: calc(0.25s * 5);
+}
+
+@media screen and (max-width: 365px) {
+  .instructions__text {
+    font-size: 0.9em;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .restaurants {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+  }
+  .restaurants__card {
+    margin-bottom: 0em;
+  }
+  .restaurants__img {
+    width: 115%;
+    position: relative;
+    bottom: 2em;
+    right: 0px;
+  }
+  .restaurants h2 {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 2;
+    grid-column: 1 / span 2;
+  }
+  .footer__icon {
+    max-width: 200px;
+  }
+  .footer__list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .footer__link {
+    -webkit-box-flex: 50%;
+        -ms-flex: 50%;
+            flex: 50%;
+  }
+}
+
+@media screen and (min-width: 920px) {
+  .hero {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: auto auto;
+        grid-template-columns: auto auto;
+    -ms-grid-rows: auto auto;
+        grid-template-rows: auto auto;
+        grid-template-areas: "text button" "text button";
+    padding: 2em 7em 2em 7em;
+  }
+  .hero__button-wrapper {
+    grid-row: 1 / span 2;
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 2;
+    -ms-grid-column: 2;
+    grid-area: button;
+  }
+  .restaurants__img {
+    width: 100%;
+    bottom: 5em;
+  }
+  .footer__list {
+    display: block;
+  }
+  .instructions {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1em;
+  }
+  .instructions h2 {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 3;
+    grid-column: 1 / span 3;
+  }
+  .instructions__item {
+    -ms-flex-item-align: start;
+        align-self: flex-start;
+    padding: 0em;
+    margin-block: 0em;
+    text-align: left;
+    height: 3em;
+    -webkit-box-align: normal;
+        -ms-flex-align: normal;
+            align-items: normal;
+  }
+  .instructions__text {
+    margin: 0em;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+  }
+  .instructions__number {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+    height: 18px;
+    left: -15px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .hero {
+    padding: 2em 10em 2em 10em;
+  }
+  .restaurants {
+    -ms-grid-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .restaurants h2 {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 4;
+    grid-column: 1 / span 4;
+  }
+  .restaurants__img {
+    width: 130%;
+    bottom: 2em;
+  }
+}
+
+body {
+  font-family: "Roboto";
+  margin: 1em 0em 0em 0em;
+}
+
+.background-color {
+  background-color: #f6f6f6;
+  padding-bottom: 3.5em;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+@media screen and (min-width: 600px) {
+  .top-wrapper {
+    height: 20rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .menu {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    grid-gap: 1em;
+  }
+  .menu__name {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 2;
+    grid-column: 1 / span 2;
+  }
+  .menu__card {
+    margin-bottom: 0em;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .shop__name {
+    font-size: 2em;
+  }
+  .top-wrapper__image {
+    bottom: 15em;
+    position: relative;
+  }
+  .menu {
+    -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+  }
+  .menu__name {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 3;
+    grid-column: 1 / span 3;
+    font-size: 1.25em;
+  }
+  .menu__card {
+    margin-bottom: 0em;
+  }
 }
 /*# sourceMappingURL=styles.css.map */
