@@ -195,7 +195,7 @@ a:hover {
 
 .d-bloc .panel,
 .l-bloc {
-    color: rgba(0, 0, 0, .5);
+    color: rgba(0, 0, 0, 1);
 }
 
 .d-bloc .panel button:hover,
@@ -780,7 +780,7 @@ h4 {
 }
 
 .bgc-atomic-tangerine {
-    background-color: #F3976C;
+    background-color: #c23d00;
 }
 
 .tc-white {
@@ -788,7 +788,7 @@ h4 {
 }
 
 .btn-atomic-tangerine {
-    background: #F3976C;
+    background: #c23d00;
     color: #FFFFFF!important;
 }
 
@@ -806,7 +806,7 @@ h4 {
 }
 
 .ltc-atomic-tangerine {
-    color: #F3976C!important;
+    color: #c23d00!important;
 }
 
 .ltc-atomic-tangerine:hover {
@@ -827,11 +827,11 @@ h4 {
 }
 
 .bg-atlanta-20made-20sign {
-    background-image: url("img/atlanta%20made%20sign.jpg");
+    background-image: url("img/atlanta-made-sign-compressed.jpg");
 }
 
 .bg-atlanta-20made-20sign-20orange {
-    background-image: url("img/atlanta%20made%20sign%20orange.jpg");
+    background-image: url("img/atlanta-made-sign-orange-compressed.jpg");
 }
 
 @media (max-width: 1024px) {
@@ -1052,7 +1052,7 @@ h4 {
 
 /* Custom code starts here */
 
-.navbar-nav a {
+nav a, .portfolio-row a {
 color: #364577!important;
 }
 
