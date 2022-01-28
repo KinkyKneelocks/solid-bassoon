@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'Pacifico';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/FwZY7-Qmy14u9lezJ-6H6MmBp0u-.woff2) format('woff2');
+    font-display: swap;
+  }
+
 body {
     margin: 0;
     padding: 0;
@@ -1086,4 +1094,13 @@ color: #364577!important;
     #bloc-7 .col-sm-6 {
 padding-left: 2.5em;
 padding-right: 2.5em;
+    }
+
+    .footer-links ul li {
+        margin-block: 0.5em;
+    }
+
+    .footer-links ul li a {
+        padding: 1.5em;
+        line-height: 3;
     }
