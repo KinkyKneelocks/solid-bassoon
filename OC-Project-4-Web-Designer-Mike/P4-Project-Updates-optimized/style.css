@@ -1,11 +1,3 @@
-@font-face {
-    font-family: 'Pacifico';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/FwZY7-Qmy14u9lezJ-6H6MmBp0u-.woff2) format('woff2');
-    font-display: swap;
-  }
-
 body {
     margin: 0;
     padding: 0;
@@ -835,11 +827,11 @@ h4 {
 }
 
 .bg-atlanta-20made-20sign {
-    background-image: url("img/atlanta-made-sign-compressed.jpg");
+    background-image: url("img/atlanta-made-sign-compressed.webp"), url("img/atlanta-made-sign-compressed.jpg");
 }
 
 .bg-atlanta-20made-20sign-20orange {
-    background-image: url("img/atlanta-made-sign-orange-compressed.jpg");
+    background-image: url("img/atlanta-made-sign-orange-compressed.webp"), url("img/atlanta-made-sign-orange-compressed.jpg");
 }
 
 @media (max-width: 1024px) {
