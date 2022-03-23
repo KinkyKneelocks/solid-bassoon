@@ -187,3 +187,58 @@ const modifyItem = (element, newAmount) => {
         }
     }
 };
+
+
+document.getElementById('email').addEventListener('change', ($event) => {
+    valideInput($event, '.+@.+\..+');
+});
+
+document.getElementById('firstName').addEventListener('change', ($event) => {
+    valideInput($event, '^[a-zA-Z ]*$');
+});
+
+document.getElementById('lastName').addEventListener('change', ($event) => {
+    valideInput($event, '^[a-zA-Z ]*$');
+});
+
+document.getElementById('address').addEventListener('change', ($event) => {
+    valideInput($event, "[A-Za-z0-9'\.\-\s\,]");
+});
+
+document.getElementById('city').addEventListener('change', ($event) => {
+    valideInput($event, '^[a-zA-Z ]*$');
+});
+
+const valideInput = (e, customRegexp) => {
+    let regex = new RegExp(customRegexp);
+    if (regex.test(e.target.value) === true) {
+        e.target.nextElementSibling.style.display = 'none';
+        document.getElementById('order').disabled = false;
+    } else {
+        e.target.nextElementSibling.style.display = 'block';
+        document.getElementById('order').disabled = true;
+    }
+};
+
+const getFormItems = () => {
+    let formItems = {};
+    formItems.firstName = String(document.getElementById('firstName').value);
+    formItems.lastName = String(document.getElementById('lastName').value);
+    formItems.address = String(document.getElementById('address').value);
+    formItems.city = String(document.getElementById('city').value);
+    formItems.email = String(document.getElementById('email').value);
+
+    return formItems;
+}
+
+const getProductFromCart = () => {
+    let products = document.querySelectorAll('.cart__item');
+    let productList = [];
+
+    for (i = 0; i < products.length; i++){
+        productList.push(products[i].dataset.id);
+    }
+
+    return productList;
+};
+
