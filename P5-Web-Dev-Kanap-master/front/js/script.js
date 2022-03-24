@@ -1,6 +1,8 @@
 const productsApi = 'http://localhost:3000/api/products/';
 const items = document.getElementById('items');
 
+/* This function generates each DOM element that is passed through in the productData variable */
+
 const createItems = (productData) => {
     for (i=0; i < productData.length; i++) {
 
@@ -30,6 +32,8 @@ const createItems = (productData) => {
         items.appendChild(productItem);
 }
 }
+
+/* This fetch gets ALL products from the backend and then calls the createItems function to integrate into the DOM */
 
 fetch(productsApi)
   .then(response => response.json())

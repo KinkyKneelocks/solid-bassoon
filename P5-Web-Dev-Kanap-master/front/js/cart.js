@@ -1,5 +1,6 @@
 let productsApi = 'http://localhost:3000/api/products/';
 
+/* This function makes sure, that the cart element in the local storage is up to date, and the local storage is not overwritten by accident */
 const getCartItems = () => {
     if (localStorage.getItem('cart') === null){
         let cart = [];
@@ -10,11 +11,14 @@ const getCartItems = () => {
     }
 }
 
+/* Here we get all cart items, and set all totals to 0, before we start any calculations */
 const cartItems = getCartItems();
 let totalAmount = 0;
 let totalPrice = 0;
 
-
+/* THis function generates all DOM element from the carts parameters (id, color, uniquekeyid and amount). For each element a different API call is used.
+This makes it scale better, as the server does not have to give back large amounts of data, which has to be filtered on the client side, but gives back the only elements necessaery.
+Event listeners are added to the elements here, to make it align better to API response delays. */
 const createCartItem = (apidata, colorid, amountid, uniqueKeyId) => {
     let productItemArticle = document.createElement('article');
     productItemArticle.classList.add('cart__item');
@@ -104,6 +108,7 @@ const createCartItem = (apidata, colorid, amountid, uniqueKeyId) => {
     document.getElementById('cart__items').appendChild(productItemArticle);
     }
 
+/* This function calculates the total amount of products and their value in the cart and adds these values to the DOM */
 const calcCartAmount = (apidata, amountid) => {
     let amountFromSession = Number(amountid);
     totalAmount += amountFromSession;
@@ -115,7 +120,8 @@ const calcCartAmount = (apidata, amountid) => {
 }
 
 
-
+/* This for loop, goes through all elements in the cart item of the local storage, and fetches the appropriate product from the backend depending on their id.
+Color and amount is fetched from the cart local storage */
 for (i = 0; i < cartItems.length; i++){
  console.log(cartItems[i]);
  let color = cartItems[i].color;
@@ -135,7 +141,8 @@ for (i = 0; i < cartItems.length; i++){
  
 }
 
-
+/* This function removes selected items from the cart and recalculates the total price and amount in the cart.
+It uses an API call to determine unit price */
 const removeItem = (element) => {
     console.log(element.dataset.uniquekey);
     let cartItemList = getCartItems();
@@ -162,7 +169,8 @@ const removeItem = (element) => {
     }
 }
 
-
+/* This function allows the user to modify the amount of product in the cart.
+It uses an API call to determin unit price. */
 const modifyItem = (element, newAmount) => {
     let cartItemList = getCartItems();
     for (i = 0; i < cartItemList.length; i++){
@@ -188,7 +196,7 @@ const modifyItem = (element, newAmount) => {
     }
 };
 
-
+/* These events validate input in the order form, making sure that proper data is sent to the back. Validation happens on the FE */
 document.getElementById('email').addEventListener('change', ($event) => {
     valideInput($event, '.+@.+\..+');
 });
@@ -209,6 +217,7 @@ document.getElementById('city').addEventListener('change', ($event) => {
     valideInput($event, '^[a-zA-Z ]*$');
 });
 
+/* This function utilizes Regular expressions to validate form data */
 const valideInput = (e, customRegexp) => {
     let regex = new RegExp(customRegexp);
     if (regex.test(e.target.value) === true) {
@@ -220,6 +229,7 @@ const valideInput = (e, customRegexp) => {
     }
 };
 
+/* This function creates a contact object, which represents all user inputs in the form */
 const getFormItems = () => {
     let formItems = {};
     formItems.firstName = String(document.getElementById('firstName').value);
@@ -231,14 +241,63 @@ const getFormItems = () => {
     return formItems;
 }
 
+/* This function lists all product IDs, which are currently in the cart */
 const getProductFromCart = () => {
     let products = document.querySelectorAll('.cart__item');
     let productList = [];
 
     for (i = 0; i < products.length; i++){
-        productList.push(products[i].dataset.id);
+        productList.push(String(products[i].dataset.id));
     }
 
     return productList;
 };
+
+
+/* This event uses getProductFromCart() and getFormItems() function to create the data to be sent to the server.
+It first validates that each of the data in the POST body is valid.
+Then it sends the POST request to the backend. If the response of the backend is not OK, it throws an error to the console.
+If it is an OK request, it prevents default of the form, sends all data to the backend, and waits for a response.
+From the response it creates a redirect to the confirmation page and adds the proper URL parameter. */
+document.getElementById('order').addEventListener('click', ($event) => { 
+    let allData = {
+        contact: getFormItems(), 
+        products: getProductFromCart()
+        };       
+
+    if (allData.contact.firstName &&
+        allData.contact.lastName &&
+        allData.contact.email &&
+        allData.contact.address &&
+        allData.contact.city &&
+        allData.products){
+    
+    $event.preventDefault();
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            },
+        body: JSON.stringify(allData),
+    };
+    fetch('http://localhost:3000/api/products/order', options)
+        .then(response => {
+	        console.log(response.status);
+                if (!response.ok) {
+	            throw new Error('Network response was status ' + response.status);
+                }
+	            return response.json();
+
+        })
+        .then(data => {
+            localStorage.removeItem('cart');
+            let newUrl = '/P5-Web-Dev-Kanap-master/front/html/confirmation.html?orderId=' + data.orderId;
+            window.location.href = newUrl;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+});
 

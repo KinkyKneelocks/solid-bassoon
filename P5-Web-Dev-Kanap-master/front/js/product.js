@@ -1,3 +1,4 @@
+/* THis function gets and returns the URL parameter 'ID' which is used to identify the product on the page */
 const getUrlParameters = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -7,6 +8,7 @@ const getUrlParameters = () => {
     }
 
 
+/* This function passes along the itemData variable and uses it to construct the DOM element of the give product */
 const createProductItem = (itemData) => {
     let productItemImg = document.createElement('img');
     productItemImg.src = itemData.imageUrl;
@@ -27,6 +29,7 @@ const createProductItem = (itemData) => {
 }
 
 
+/* This API call gets the relevant product data for the page. Uses getUrlParameters() to identify the product and createProductItem(data) to construct the DOM element according to the API respons */
 let productsApi = 'http://localhost:3000/api/products/';
 productsApi += getUrlParameters();
 console.log(productsApi);
@@ -39,7 +42,7 @@ fetch(productsApi)
        );
 
 
-
+/* THis event listener makes sure that the amount of the product is valid */
 let inputElement = document.getElementById('quantity');
 inputElement.addEventListener('change',() => {
     if (inputElement.value > 100) {
@@ -60,6 +63,7 @@ addToCart();
 });
 
 
+/*THis function creates the actual cart Item array, which is then used to pass along to other pages */
 const createCartItem = () => {
 let cartItem = {};
 cartItem.id = getUrlParameters();
@@ -69,7 +73,7 @@ cartItem.uniqueKey = cartItem.id + '_' + cartItem.color;
 return cartItem;
 }
 
-
+/* This function makes sure, that the cart element in the local storage is up to date, and the local storage is not overwritten by accident */
 const getCartItems = () => {
     if (localStorage.getItem('cart') === null){
         let cart = [];
@@ -81,7 +85,7 @@ const getCartItems = () => {
 }
 
 
-
+/* This function adds the product object to the cart array and updates the local storage cart item */
 const addToCart = () => {
     let item = createCartItem();
     let cartItemList = getCartItems();
