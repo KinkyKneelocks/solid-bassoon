@@ -118,11 +118,78 @@ exports.deleteSauce = (req, res, next) => {
   };
 
   exports.rateSauce = (req, res, next) => {
-    let sauce = new Sauce({_id: req.params._id});
-
-    if(req.body.like === 1){
-        console.log(req.body);
+    if (req.body.like == 1) {
+        Sauce.updateOne({_id: req.params.id},{
+            $addToSet: {usersLiked: req.body.userId},
+            $inc: {likes: 1}
+        }).then(() => {
+            res.status(201).json({
+                message: 'updated successfully'
+            })
+        }).catch((error) => {
+            res.status(400).json({
+                error: error
+            })
+        });
     }
 
-    res.status(200);
-  };
+    if (req.body.like == -1) {
+        Sauce.updateOne({_id: req.params.id},{
+            $addToSet: {usersDisliked: req.body.userId},
+            $inc: {dislikes: 1}
+        }).then(() => {
+            res.status(201).json({
+                message: 'updated successfully'
+            })
+        }).catch((error) => {
+            res.status(400).json({
+                error: error
+            })
+        });
+    }
+
+    if (req.body.like == 0) {
+        Sauce.findOne({_id: req.params.id}).then((sauce) => {
+        let x = false;
+        for (i = 0; i > sauce.usersLiked.length; i++) {
+            if (sauce.usersLiked[i] == req.body.userId){
+                x = true;
+            }
+        }
+        if (x === true) {
+            Sauce.updateOne({_id: req.params.id},{
+                $pull: {usersLiked: req.body.userId},
+                $inc: {likes: -1}
+            }).then(() => {
+                res.status(201).json({
+                    message: 'updated successfully'
+                })
+            }).catch((error) => {
+                res.status(400).json({
+                    error: error
+                })
+            });
+        } else {
+            Sauce.updateOne({_id: req.params.id},{
+                $pull: {usersDisliked: req.body.userId},
+                $inc: {dislikes: -1}
+            }).then(() => {
+                res.status(201).json({
+                    message: 'updated successfully'
+                })
+            }).catch((error) => {
+                res.status(400).json({
+                    error: error
+                })
+            });
+        }
+    
+    }).catch((error) => {
+        res.status(400).json({
+            error: error
+        })
+    });
+    }
+
+    };
+
