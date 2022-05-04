@@ -1,5 +1,8 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://BCsuka:lCb0re7S1nKxKtLT@cluster0.2yezc.mongodb.net/Cluster0?retryWrites=true&w=majority')
+mongoose.connect(process.env.DB)
 .then(() => {
     console.log('DB connection is ok');
 })
