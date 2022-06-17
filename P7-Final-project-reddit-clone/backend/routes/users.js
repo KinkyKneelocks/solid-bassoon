@@ -11,5 +11,7 @@ router.use((req, res, next) => {
 
 router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
+router.get('/amiloggedin', userCtrl.amILoggedIn);
+router.delete('/delete', userCtrl.deleteUser);
 
 module.exports = router;
