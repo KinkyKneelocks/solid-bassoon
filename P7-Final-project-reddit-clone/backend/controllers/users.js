@@ -104,6 +104,25 @@ exports.login = (req, res, next) => {
     }    
 }
 
+exports.logout = (req, res, next) => {
+    try {
+        if (!req.cookies.authorization) {
+            res.status(400).json({
+                error: 'user is not logged in'
+            })
+            return;
+        }
+        res.clearCookie("authorization")
+        res.status(200).json({
+            message: "user logged out successfully"
+        })
+    } catch (error) {
+        res.status(400).json({
+            error: error
+        })
+    }
+}
+
 exports.amILoggedIn = (req, res, next) => {
     try { 
         if (!req.cookies.authorization) {
