@@ -27,8 +27,7 @@ exports.signup = (req, res, next) => {
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 if (error.errno === 1062) {
-                    res.status(400).json({
-                        error: error,
+                    res.status(409).json({
                         message: "Username alrady taken"
                     })
                     return;
@@ -64,7 +63,7 @@ exports.login = (req, res, next) => {
             }
             
             if (results.length === 0) {
-                res.status(400).json({
+                res.status(402).json({
                     message: "user is not registered"
                 })
                 return;

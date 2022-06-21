@@ -18,7 +18,7 @@ const db = sql.createConnection(sqlConfig);
 
 exports.getAllPosts = (req, res, next) => {
     try {
-        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount FROM Posts LEFT JOIN Comments ON Comments.postId = Posts.PostId GROUP BY Posts.postId;`
+        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount FROM Posts LEFT JOIN Comments ON Comments.postId = Posts.PostId GROUP BY Posts.postId ORDER BY Posts.createdOn DESC;`
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 res.status(400).json({
@@ -59,10 +59,11 @@ exports.getOnePost = (req, res, next) => {
     }
 };
 
-exports.addPost = (req, res, next) => {  
+exports.addPost = (req, res, next) => { 
+    console.log(req.body) 
     try {
         if (!req.file) {
-        const myQuery = `INSERT INTO Posts (Title, Description, userName) VALUES ("${req.body.post.title}", "${req.body.post.desc}", "${req.body.post.userName}");`
+        const myQuery = `INSERT INTO Posts (Title, Description, userName) VALUES ("${req.body.title}", "${req.body.desc}", "${req.body.userName}");`
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 res.status(400).json({
@@ -71,21 +72,21 @@ exports.addPost = (req, res, next) => {
                 return;
             }
             res.status(200).json(results)
-        })
-    } else {
-        const url = req.protocol + '://' + req.get('host');
-        const imageUrl = url + '/images/' + req.file.filename;
-        const myQuery = `INSERT INTO Posts (Title, Description, userName, ImgUrl) VALUES ("${req.body.post.title}", "${req.body.post.desc}", "${req.body.post.userName}", "${imageUrl}");`;
-        db.query(myQuery, (error, results, fields) => {
-            if (error) {
-                res.status(400).json({
-                    error: error
-                })
-                return;
-            }
-            res.status(200).json(results)
-        })
-    }
+        })        
+        } else {
+            const url = req.protocol + '://' + req.get('host');
+            const imageUrl = url + '/images/' + req.file.filename;
+            const myQuery = `INSERT INTO Posts (Title, Description, userName, ImgUrl) VALUES ("${req.body.title}", "${req.body.desc}", "${req.body.userName}", "${imageUrl}");`;
+            db.query(myQuery, (error, results, fields) => {
+                if (error) {
+                    res.status(400).json({
+                        error: error
+                    })
+                    return;
+                }
+                res.status(200).json(results)
+            })        
+        }
         
     } catch (error) {
         console.error(error)
@@ -149,7 +150,7 @@ exports.deletePost = (req, res, next) => {
 exports.updatePost = (req, res, next) => {
     try {
         if (!req.file) {
-        const myQuery = `UPDATE Posts SET ImgUrl = NULL, Title = "${req.body.post.title}", Description = "${req.body.post.desc}" WHERE postId = "${req.params.id}"`;
+        const myQuery = `UPDATE Posts SET Title = "${req.body.post.title}", Description = "${req.body.post.desc}" WHERE postId = "${req.params.id}"`;
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 res.status(400).json({
@@ -183,7 +184,7 @@ exports.updatePost = (req, res, next) => {
 
 exports.getCommentsForPost = (req, res, next) => {
     try {
-        const myQuery = `SELECT * FROM Comments WHERE PostId = "${req.params.id}" `;
+        const myQuery = `SELECT * FROM Comments WHERE PostId = "${req.params.id}" ORDER BY createdOn DESC`;
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 req.status(400).json({

@@ -29,9 +29,9 @@ db.connect((err) => {
 
 
 
-/*
 
-let myQuery = "ALTER TABLE Posts ADD createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP";
+
+let myQuery = "SELECT * FROM Posts";
 
 
 
@@ -47,7 +47,7 @@ db.query(myQuery,
     
 }) 
 
-*/
+
 
 
 const userRoutes = require('./routes/users');
