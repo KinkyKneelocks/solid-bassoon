@@ -1,13 +1,14 @@
-import React, { useState, useContext, useCallback } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Services/UserContext"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Dropzone, { useDropzone } from "react-dropzone"
 import e from "cors";
 
 
-const SubmitPostForm = () => {
+const ModPostForm = () => {
     let navigate = useNavigate()
     const { user, setUser } = useContext(UserContext)
+    let { postId } = useParams()
     const [isPending, setIsPending] = useState(false)
     const [dropzoneLabel, setDropzoneLabel] = useState("Drag 'n' drop some files here, or click to select files")
     const [dropzoneIsActive, setDropzoneIsActive] = useState(false)
@@ -19,7 +20,33 @@ const SubmitPostForm = () => {
         file: null
     })
 
-    console.log(formData)
+    useEffect(() => {
+        fetch(`http://localhost:3000/api/posts/${postId}`)
+        .then((res) => {
+            if (res.status !== 200) {
+                throw Error('Cannot get post data')
+                setIsPending(true)
+            }
+            return res.json()
+        })
+        .then((data) => {
+            console.log(data[0])
+            setFormData((prevFormData) => {
+                return (
+                    {...prevFormData,
+                    title: data[0].Title,
+                    desc: data[0].Description
+                    }
+                )
+            })
+            setPreviewImage(data[0].imgUrl)
+        })
+        .catch((Error) => {
+            console.error(Error)
+        })
+    }, [])
+
+    
 
     const handleChange = (event, dropfile) => {
         let customValue
@@ -49,7 +76,7 @@ const SubmitPostForm = () => {
         event.preventDefault()
         if (!formData.file) {
             fetchOptions = {
-                method: 'POST',
+                method: 'PUT',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,17 +95,17 @@ const SubmitPostForm = () => {
             fd.append('file', formData.file, formData.file.name)
 
             fetchOptions = {
-                method: 'POST',
+                method: 'PUT',
                 credentials: 'include',
                 body: fd
             }
         }
-        fetch('http://localhost:3000/api/posts/', fetchOptions)
+        fetch(`http://localhost:3000/api/posts/${postId}`, fetchOptions)
         .then((res) => {
             if (res.status === 200) {
                 console.log('success')
                 setIsPending(false)
-                navigate('/')
+                navigate(`/posts/${postId}`)
             } else {
                 setIsPending(false)
                 console.log('failure')
@@ -140,4 +167,4 @@ const SubmitPostForm = () => {
     )
 }
 
-export default SubmitPostForm
+export default ModPostForm

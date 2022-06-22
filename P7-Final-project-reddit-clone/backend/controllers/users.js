@@ -23,7 +23,7 @@ exports.signup = (req, res, next) => {
     
     bcrypt.hash(req.body.password, 10).then((hash) => {
         const password = hash;
-        const myQuery = `INSERT INTO Users VALUES ("${req.body.username}", "${password}");`;
+        const myQuery = `INSERT INTO Users VALUES ("${req.body.username}", "${password}", NULL);`;
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 if (error.errno === 1062) {
@@ -130,10 +130,8 @@ exports.amILoggedIn = (req, res, next) => {
             })
             return;
         }
-        const token = req.cookies.authorization.slice(1, -1)
-        console.log(token)    
-        const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-        console.log(decodedToken)
+        const token = req.cookies.authorization.slice(1, -1)    
+        const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);        
         
         res.status(200).json({
             username: decodedToken.username
@@ -151,7 +149,7 @@ exports.deleteUser = (req, res, next) => {
     const deleteUser = `DELETE FROM Users WHERE userName = "${req.body.username}"`
 
     try {
-        db.query(updatePosts, (error, results, fields) => {
+        db.query(updateComments, (error, results, fields) => {
             if (error) {
                 res.status(400).json({
                     error: error
@@ -165,7 +163,7 @@ exports.deleteUser = (req, res, next) => {
                     })
                     return
                 }
-                db.query(updateComments, (error, results, fields) => {
+                db.query(deleteUser, (error, results, fields) => {
                     if (error) {
                         res.status(400).json({
                             error: error
@@ -177,6 +175,140 @@ exports.deleteUser = (req, res, next) => {
             })
         })
     } catch (error) {
+        res.status(400).json({
+            error: error
+        })
+    }
+}
+
+exports.getUserData = (req, res, next) => {
+    try {
+        const findUser = `SELECT userName, profilepic from Users WHERE userName = "${req.body.username}"`;
+        console.log(req.body.username)
+        db.query(findUser, (error, results, fields) => {
+            if (error) {
+                res.status(400).json({
+                    error: error
+                })
+                return
+            }
+            res.status(200).json(results)
+        })
+    } catch (error) {
+        res.stats(400).json({
+            error: error
+        })
+    }
+}
+
+exports.changePassword = (req, res, next) => {
+    try {
+        bcrypt.hash(req.body.password, 10)
+        .then((hash) => {
+            const password = hash
+            const updatePw = `UPDATE Users SET password = "${password}" WHERE userName = "${req.body.username}"`
+            db.query(updatePw, (error, results, fields) => {
+                if (error) {
+                    res.status(400).json({
+                        error: error
+                    })
+                    return
+                }
+                res.status(200).json(results)
+            })
+        })
+    } catch (error) {
+        res.status(400).json({
+            error: error
+        })
+    }
+}
+
+
+exports.changeUsername = (req, res, next) => {
+    try {
+        const findDuplicate = `SELECT * FROM Users WHERE userName = "${req.body.username}"`
+        db.query(findDuplicate, (error, results, fields) => {            
+            if (error) {
+                res.status(400).json({
+                    error: error
+                })
+                return  
+            }
+
+            /*if (results[0]) {
+                res.status(409).json({
+                    message: "Username alrady taken"
+                })
+                return
+            }
+            */
+
+            const olduser = results            
+            const createNewUser = `INSERT INTO Users VALUES ("${req.body.newusername}", "${olduser[0].password}", "${olduser[0].profilepic}")`
+            db.query(createNewUser, (error, results, fields) => {
+                if (error) {
+                    res.status(400).json({
+                        error: error
+                    })
+                    return  
+                }
+                const updateComments = `UPDATE Comments SET userName = "${req.body.newusername}" WHERE userName = "${olduser[0].userName}"`
+                db.query(updateComments, (error, results, fields) => {
+                    if (error) {
+                        res.status(400).json({
+                            error: error
+                        })
+                        return
+                    }
+                    const updatePosts = `UPDATE Posts SET userName = "${req.body.newusername}" WHERE userName = "${olduser[0].userName}"`
+                    db.query(updatePosts, (error, results, fields) => {
+                        if (error) {
+                            res.status(400).json({
+                                error: error
+                            })
+                            return
+                        }
+                        const deleteUser = `DELETE FROM Users WHERE userName = "${olduser[0].userName}"`
+                        db.query(deleteUser, (error, results, fields) => {
+                            if (error) {
+                                res.status(400).json({
+                                    error: error
+                                })
+                                return
+                            }
+                            res.status(200).json(results)
+                        })
+                    })
+                })
+            })
+        })
+
+
+    } catch (error) {
+        res.status(400).json({
+            error: error
+        })
+    }
+}
+
+exports.changeProfilepic = (req, res, next) => {
+    try {
+        const url = req.protocol + '://' + req.get('host');
+        const imageUrl = url + '/images/' + req.file.filename;
+        const updatePic = `UPDATE Users SET profilepic = "${imageUrl}" WHERE userName = "${req.body.username}"`
+        db.query(updatePic, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+                res.status(401).json({
+                    error: error
+                })
+                return
+            }
+            res.status(200).json(results)
+        })
+    } catch (error) {
+        console.log(error)
         res.status(400).json({
             error: error
         })

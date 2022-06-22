@@ -10,6 +10,9 @@ const SinglePostView = () => {
     const [commentData, setCommentData] = useState([])
     const [toggleCommentReload, setToggleCommentReload] = useState(1)   
 
+    console.log(commentData)
+    console.log(postData)
+
 
     useEffect(() => {
         let fetchPostData = fetch(`http://localhost:3000/api/posts/${postId}`)
@@ -53,7 +56,7 @@ const SinglePostView = () => {
     }
 
     let allComments = commentData.map((comment) => {
-        return <CommentBlock username={comment.userName} text={comment.commentText} createdon={comment.createdOn} commentid={comment.commentId} toggleReload={renderComments} />
+        return <CommentBlock username={comment.userName} text={comment.commentText} createdon={comment.createdOn} commentid={comment.commentId} toggleReload={renderComments} userpic={comment.profilepic} />
     })
 
     return (
@@ -64,7 +67,9 @@ const SinglePostView = () => {
                 imgurl={postData.imgUrl} 
                 postid={postData.postId} 
                 text={postData.Description} 
-                createdon={postData.createdOn} />
+                createdon={postData.createdOn} 
+                userpic={postData.profilepic}
+                />
 
             <div>
                 <AddCommentForm postId={postId} toggleReload={renderComments} />               

@@ -31,7 +31,7 @@ db.connect((err) => {
 
 
 
-let myQuery = "SELECT * FROM Posts";
+let myQuery = `SELECT * FROM Users`;
 
 
 

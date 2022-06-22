@@ -3,6 +3,7 @@ import PostPreview from "./PostPreview"
 
 const Posts = () => {
     const [posts, setPosts] = useState([])
+    const [toggleReload, setToggleReload] =useState(1)
 
     console.log(posts)
 
@@ -13,10 +14,14 @@ const Posts = () => {
         .catch((error) => {
             console.log(error)
         })
-    }, [])
+    }, [toggleReload])
+
+    const toggleDelete = () => {
+        setToggleReload(prevToggleReload => prevToggleReload +1)
+    }
 
     let allPosts = posts.map((post) => {       
-            return <PostPreview title={post.Title} imgUrl={post.imgUrl} commentCount={post.commentCount} postId={post.postId} userName={post.userName} description={post.Description} /> 
+            return <PostPreview createdon={post.createdon} userpic={post.profilepic} title={post.Title} imgUrl={post.imgUrl} commentCount={post.commentCount} postId={post.postId} username={post.userName} description={post.Description} toggleReload={toggleDelete} /> 
     })
 
     return (

@@ -18,7 +18,11 @@ const db = sql.createConnection(sqlConfig);
 
 exports.getAllPosts = (req, res, next) => {
     try {
-        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount FROM Posts LEFT JOIN Comments ON Comments.postId = Posts.PostId GROUP BY Posts.postId ORDER BY Posts.createdOn DESC;`
+        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, Users.profilepic FROM Posts 
+        LEFT JOIN Comments ON Comments.postId = Posts.PostId
+        LEFT JOIN Users ON Users.userName = Posts.userName 
+        GROUP BY Posts.postId 
+        ORDER BY Posts.createdOn DESC;`
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 res.status(400).json({
@@ -37,7 +41,11 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-    const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount FROM Posts LEFT JOIN Comments ON Comments.postId = Posts.PostId WHERE Posts.postId = "${req.params.id}" GROUP BY Posts.postId;`;
+    const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, Users.profilepic FROM Posts 
+    LEFT JOIN Comments ON Comments.postId = Posts.PostId
+    LEFT JOIN Users ON Users.userName = Posts.userName
+    WHERE Posts.postId = "${req.params.id}"
+    GROUP BY Posts.postId`;
     try {        
         db.query(myQuery, (error, results, fields) => {
             if (error) {
@@ -59,8 +67,7 @@ exports.getOnePost = (req, res, next) => {
     }
 };
 
-exports.addPost = (req, res, next) => { 
-    console.log(req.body) 
+exports.addPost = (req, res, next) => {     
     try {
         if (!req.file) {
         const myQuery = `INSERT INTO Posts (Title, Description, userName) VALUES ("${req.body.title}", "${req.body.desc}", "${req.body.userName}");`
@@ -150,7 +157,7 @@ exports.deletePost = (req, res, next) => {
 exports.updatePost = (req, res, next) => {
     try {
         if (!req.file) {
-        const myQuery = `UPDATE Posts SET Title = "${req.body.post.title}", Description = "${req.body.post.desc}" WHERE postId = "${req.params.id}"`;
+        const myQuery = `UPDATE Posts SET Title = "${req.body.title}", Description = "${req.body.desc}" WHERE postId = "${req.params.id}"`;
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 res.status(400).json({
@@ -159,32 +166,37 @@ exports.updatePost = (req, res, next) => {
                 return;
             }
             res.status(200).json(results)
-        })
-    } else {
-        const url = req.protocol + '://' + req.get('host');
-        req.body.sauce = JSON.parse(req.body.sauce);
-        const imageUrl = url + '/images/' + req.file.filename
-        const myQuery = `UPDATE Posts SET ImgUrl = "${imageUrl}", Title = "${req.body.post.title}", Description = "${req.body.post.desc}" WHERE postId = "${req.params.id}"`;
-        db.query(myQuery, (error, results, fields) => {
-            if (error) {
-                res.status(400).json({
-                    error: error
-                })
-                return;
-            }
-            res.status(200).json(results)
-        })
-    }
+        })        
+        } else {
+            const url = req.protocol + '://' + req.get('host');
+            const imageUrl = url + '/images/' + req.file.filename;
+            const myQuery = `UPDATE Posts SET ImgUrl = "${imageUrl}", Title = "${req.body.title}", Description = "${req.body.desc}" WHERE postId = "${req.params.id}"`;
+            db.query(myQuery, (error, results, fields) => {
+                if (error) {
+                    res.status(400).json({
+                        error: error
+                    })
+                    return;
+                }
+                res.status(200).json(results)
+            })        
+        }
+        
     } catch (error) {
+        console.error(error)
         res.status(400).json({
             error: error
         })
-    }
+   }
+    
 }
 
 exports.getCommentsForPost = (req, res, next) => {
     try {
-        const myQuery = `SELECT * FROM Comments WHERE PostId = "${req.params.id}" ORDER BY createdOn DESC`;
+        const myQuery = `SELECT Comments.commentId, Comments.userName, Comments.PostId, Comments.commentText, Comments.createdOn, Users.profilepic FROM Comments
+        LEFT JOIN Users ON Users.userName = Comments.userName
+        WHERE Comments.postId = "${req.params.id}"
+        GROUP BY Comments.commentId`
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 req.status(400).json({

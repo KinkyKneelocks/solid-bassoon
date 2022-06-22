@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../Services/UserContext"
+import Avatar from "./Avatar";
 
 const CommentBlock = (props) => {
     const { user } = useContext(UserContext)
@@ -29,8 +30,12 @@ const CommentBlock = (props) => {
     return (
         <div className="comment" id={props.commentid}>
             <div className="comment__credentials">
-                <div className="comment__credentials__user">{props.username}</div>
+                <div className="comment__credentials__userwrapper">
+                    <Avatar pic={props.userpic} />
+                    <div className="comment__credentials__userwrapper__user">{props.username}</div>                
+                </div>
                 <div className="comment__credentials__date">{props.createdon}</div>
+                
             </div>
             <div className="comment__content">
                 {props.text}

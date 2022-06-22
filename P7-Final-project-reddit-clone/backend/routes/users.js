@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const userCtrl = require('../controllers/users');
 
+const multer = require('../middleware/multer-config');
+
 router.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3006');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -15,5 +17,9 @@ router.post('/login', userCtrl.login);
 router.get('/amiloggedin', userCtrl.amILoggedIn);
 router.delete('/delete', userCtrl.deleteUser);
 router.get('/logout', userCtrl.logout);
+router.post('/user', userCtrl.getUserData);
+router.put('/changepassword', userCtrl.changePassword);
+router.put('/changeusername', userCtrl.changeUsername);
+router.put('/changeprofilepic', multer, userCtrl.changeProfilepic);
 
 module.exports = router;
