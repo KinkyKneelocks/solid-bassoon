@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { UserContext } from "../Services/UserContext"
 import Avatar from "./Avatar";
+import createDateFormat from "../Services/createDateFormat";
 
 const CommentBlock = (props) => {
+    let createdOnDate
     const { user } = useContext(UserContext)
 
     const deleteComment = () => {
@@ -26,15 +28,18 @@ const CommentBlock = (props) => {
             console.error(Error)
         })
     }
+    if (props.createdon) {
+        createdOnDate = createDateFormat(props.createdon)        
+    }
 
     return (
-        <div className="comment" id={props.commentid}>
+        <section className="comment" id={props.commentid}>
             <div className="comment__credentials">
                 <div className="comment__credentials__userwrapper">
                     <Avatar pic={props.userpic} />
                     <div className="comment__credentials__userwrapper__user">{props.username}</div>                
                 </div>
-                <div className="comment__credentials__date">{props.createdon}</div>
+                <div className="comment__credentials__date">{createdOnDate}</div>
                 
             </div>
             <div className="comment__content">
@@ -45,7 +50,7 @@ const CommentBlock = (props) => {
                 <div className="comment__controller__delete" data-commentid={props.commentid} onClick={deleteComment} >Delete comment</div>
             </div>
             }
-        </div>
+        </section>
     )
 }
 

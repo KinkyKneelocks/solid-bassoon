@@ -18,15 +18,12 @@ const db = sql.createConnection(sqlConfig);
 
 exports.getAllPosts = (req, res, next) => {
     try {
-        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, Users.profilepic FROM Posts 
-        LEFT JOIN Comments ON Comments.postId = Posts.PostId
-        LEFT JOIN Users ON Users.userName = Posts.userName 
-        GROUP BY Posts.postId 
-        ORDER BY Posts.createdOn DESC;`
+        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, Users.profilepic FROM Posts LEFT JOIN Comments ON Comments.postId = Posts.PostId LEFT JOIN Users ON Users.userName = Posts.userName GROUP BY Posts.postId ORDER BY Posts.createdOn DESC;`
         db.query(myQuery, (error, results, fields) => {
             if (error) {
+                console.log(error)
                 res.status(400).json({
-                    error: error
+                    error: error                    
                 })
                 return;
             }

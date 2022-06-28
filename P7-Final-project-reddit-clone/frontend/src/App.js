@@ -10,10 +10,14 @@ import { UserContext } from "./Services/UserContext"
 import SinglePostView from './Pages/SinglePostView';
 import ModifyPost from './Pages/ModifyPost';
 
+
+
 function App() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(false)
+
   const providerValue = useMemo(() => ({ user, setUser }), [user, setUser])
 
+  
   useEffect(() => {
     fetch('http://localhost:3000/api/users/amiloggedin', {
       credentials: 'include'
@@ -34,6 +38,8 @@ function App() {
       }
     })
   }, [])
+  
+  
 
   return (
     <Router>

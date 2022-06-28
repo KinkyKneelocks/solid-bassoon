@@ -203,18 +203,43 @@ exports.getUserData = (req, res, next) => {
 
 exports.changePassword = (req, res, next) => {
     try {
-        bcrypt.hash(req.body.password, 10)
-        .then((hash) => {
-            const password = hash
-            const updatePw = `UPDATE Users SET password = "${password}" WHERE userName = "${req.body.username}"`
-            db.query(updatePw, (error, results, fields) => {
-                if (error) {
-                    res.status(400).json({
-                        error: error
-                    })
-                    return
+        const findUser = `SELECT password FROM Users WHERE userName = "${req.body.username}"`
+        db.query(findUser, (error, results, fields) => {
+            if (error) {
+                console.log(error)
+                res.status(400).json({
+                    error: error
+                })
+                return
+            }
+            let oldPassword = results[0].password
+            bcrypt.compare(req.body.oldpw, oldPassword)
+            .then((valid) => {
+                if (!valid) {
+                    res.status(401).json({
+                        error: 'Incorrect password!'
+                      })
+                      throw Error('Incorrect password!')
+                } else {
+                    return bcrypt.hash(req.body.password, 10)
                 }
-                res.status(200).json(results)
+            })
+            .then((hash) => {
+                const password = hash
+                const updatePw = `UPDATE Users SET password = "${password}" WHERE userName = "${req.body.username}"`
+                db.query(updatePw, (error, results, fields) => {
+                    if (error) {
+                        console.log(error)
+                        res.status(400).json({
+                            error: error
+                        })
+                        throw Error('Password change is not available')
+                    }
+                    res.status(200).json(results)
+                })
+            })
+            .catch((error) => {
+                console.log(error)
             })
         })
     } catch (error) {

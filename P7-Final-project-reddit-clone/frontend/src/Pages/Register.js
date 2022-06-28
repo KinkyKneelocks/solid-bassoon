@@ -3,10 +3,10 @@ import RegistrationForm from "../Components/RegistrationForm"
 
 const Register = () => {
     return (
-        <main>
+        <section>
             <h1>This is where the reg form goes.</h1>
             <RegistrationForm />
-        </main>
+        </section>
     )
 }
 

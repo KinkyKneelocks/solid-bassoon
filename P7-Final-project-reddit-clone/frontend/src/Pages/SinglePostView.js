@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import CommentBlock from "../Components/CommentBlock"
 import PostComplete from "../Components/PostComplete"
 import AddCommentForm from "../Components/AddCommentForm"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons'
 
-const SinglePostView = () => {    
+const SinglePostView = () => {  
+    let navigate = useNavigate()  
     let { postId } = useParams()
     const [postData, setPostData] = useState({})
     const [commentData, setCommentData] = useState([])
-    const [toggleCommentReload, setToggleCommentReload] = useState(1)   
-
-    console.log(commentData)
-    console.log(postData)
-
+    const [toggleCommentReload, setToggleCommentReload] = useState(1)
 
     useEffect(() => {
         let fetchPostData = fetch(`http://localhost:3000/api/posts/${postId}`)
@@ -22,7 +21,7 @@ const SinglePostView = () => {
         .then(values => {
             return Promise.all(values.map(r => r.json()))
         })
-        .then(([postData, commentData]) => {
+        .then(([postData, commentData]) => {            
             setPostData(postData[0])
             setCommentData(commentData)
         })
@@ -60,7 +59,12 @@ const SinglePostView = () => {
     })
 
     return (
-        <main>
+        <section>
+            <div className="back-button">
+                <div className="back-button__content" onClick={() => navigate('/')}>
+                    <FontAwesomeIcon icon={faAnglesLeft}/> <b>All posts</b>
+                </div>
+            </div>
             <PostComplete 
                 username={postData.userName} 
                 title={postData.Title} 
@@ -71,15 +75,15 @@ const SinglePostView = () => {
                 userpic={postData.profilepic}
                 />
 
-            <div>
+            <section>
                 <AddCommentForm postId={postId} toggleReload={renderComments} />               
-            </div>
+            </section>
 
 
-            <div className="comments">
+            <section className="comments">
                 {allComments}
-            </div>
-        </main>
+            </section>
+        </section>
     )
 }
 

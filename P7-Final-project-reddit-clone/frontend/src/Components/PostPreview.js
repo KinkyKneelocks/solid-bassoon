@@ -2,8 +2,12 @@ import React, { useContext } from "react"
 import { UserContext } from "../Services/UserContext"
 import { Link } from "react-router-dom"
 import Avatar from "./Avatar"
+import createDateFormat from "../Services/createDateFormat"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMessage, faPuzzlePiece, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const PostPreview = (props) => {
+    let createdOnDate
     const { user, setUser } = useContext(UserContext)
     const commentButtonLabel = (commentNumber) => {
         if (commentNumber === 0) {
@@ -37,6 +41,10 @@ const PostPreview = (props) => {
         })
     }
 
+    if (props.createdon) {
+        createdOnDate = createDateFormat(props.createdon)
+    }
+
     return (
         <Link to={postUrl} key={props.postId}>
             <div className="post">
@@ -47,7 +55,7 @@ const PostPreview = (props) => {
                     </div>     
                     
                     <div className="post__credentials__createdon">
-                        {props.createdon}
+                        {createdOnDate}
                     </div>
                 </div>
                 <h3 className="post__title">{props.title}</h3>
@@ -60,9 +68,9 @@ const PostPreview = (props) => {
                 }                
                 
                 <div className="post__buttons">
-                    <div className="post__buttons__comments">{commentLabel}</div>
-                    {props.userName === user && <div className="post__buttons__delete"><Link to={postModUrl}>Modify</Link></div>}
-                    {props.userName === user && <div className="post__buttons__delete" onClick={deletePost}>Delete</div>}                
+                    <div className="post__buttons__comments post__buttons__element"><FontAwesomeIcon icon={faMessage}/> {commentLabel}</div>
+                    {props.username === user && <div className="post__buttons__modify post__buttons__element"><Link to={postModUrl}><FontAwesomeIcon icon={faPuzzlePiece}/> Modify</Link></div>}
+                    {props.username === user && <div className="post__buttons__delete post__buttons__element" onClick={deletePost}><FontAwesomeIcon icon={faTrash}/> Delete</div>}                
                 </div>
             </div>
         </Link>

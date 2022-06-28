@@ -1,0 +1,104 @@
+.back-button__content {
+    background-color: white;
+    margin-top: 1em;
+    padding: 0.75em 0.25em;
+    border-radius: 1em 0px 0px 0px;
+    cursor: pointer;
+}
+
+.postsa {
+    width: 100%;
+    text-decoration: none;
+    margin-top: 2px;
+    padding-bottom: 1em;
+    background-color: white;
+
+    &__image-wrapper {
+        background-color: white;
+
+        & > img {
+            width: 100%;
+        }
+    }
+
+    &__title {
+        font-size: 2em;
+        padding: 0.5em 0.25em;
+        background-color: white;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    &__text {
+        
+        background-color: white;
+        padding: 0.5em 0.25em 0.75em;  
+    }
+
+    &__controller {
+        background-color: white;        
+        display: flex;
+        justify-content: flex-start;
+        cursor: pointer;   
+        
+        &__delete {
+            color: #c51717 !important;
+        }
+        
+        &__modify {
+            text-decoration: none;
+            & > a {
+                text-decoration: none;
+                color: #222233;
+            }
+        }
+
+        &__element {
+            padding: 0.75em 1em;
+            transition: 0.3s;   
+            color: #222233;
+            
+            &:hover {
+                background-color: #8c8c8c;
+            }
+        }
+    }
+
+    &__credentials {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;        
+        padding-right: 1em;
+
+
+        &__userwrapper {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+
+            & > .avatar {
+                width: 3em;
+                height: 3em;                
+                overflow: hidden;
+                margin-right: 1em;
+
+                & > img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .post__buttons__element {
+        padding: 0.75em 0.5em;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .post__wrapper {
+        max-height: 36em;
+    }
+}

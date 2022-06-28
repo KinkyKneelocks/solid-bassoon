@@ -30,23 +30,17 @@ db.connect((err) => {
 
 
 
-
-let myQuery = `SELECT * FROM Users`;
-
-
-
-
+/*
+let myQuery = `DELETE FROM Users WHERE userName = "Testuser555"`;
 db.query(myQuery, 
     (error, results, fields) => {
         if (error) {
             throw error.errno;
             return;
         }
-        
-        console.log(results);
-    
+        console.log(results);   
 }) 
-
+*/
 
 
 

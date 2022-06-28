@@ -1,0 +1,443 @@
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: 4rem;
+  background: #1f1b24;
+  color: white;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  max-height: 5rem;
+}
+
+header .logo {
+  margin-top: -102px;
+  margin-bottom: -110px;
+  width: 350px;
+  margin-left: -30px;
+  margin-right: -15px;
+}
+
+header .nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}
+
+header .nav__buttons {
+  font-size: 1.25em;
+  font-weight: bold;
+  text-decoration: none;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+header .nav__buttons > a {
+  text-decoration: none;
+  padding-inline: 0.5em;
+  padding-block: 1em;
+  color: white;
+  background-image: -webkit-gradient(linear, left top, right top, from(white), color-stop(white), color-stop(#f5af19), to(#f12711));
+  background-image: linear-gradient(90deg, white, white, #f5af19, #f12711);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  background-size: 250%;
+  background-position: left;
+}
+
+header .nav__buttons > a svg {
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+header .nav__buttons > a:hover {
+  color: white;
+  background-position: right;
+}
+
+header .nav__buttons > a:hover svg {
+  color: #f5af19;
+}
+
+header .nav--alt {
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+
+header .nav__credentials {
+  position: relative;
+  margin-right: 1em;
+  margin-top: 5px;
+}
+
+header .nav__credentials__top {
+  cursor: pointer;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  border-left: 1px solid gray;
+  padding: 0.5em 0em 0.5em 1em;
+  border-radius: 0.5em 0em 0em 0.5em;
+}
+
+header .nav__credentials__top .fa-angle-down {
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+header .nav__credentials__top--open > .fa-angle-down {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+header .nav__credentials__menu {
+  position: absolute;
+  width: 115%;
+  background-color: #1f1b24;
+  top: 40px;
+}
+
+header .nav__credentials__menu__element {
+  cursor: pointer;
+  padding: 0.75em 0.5em;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border-radius: 0.5em;
+}
+
+header .nav__credentials__menu__element--logout {
+  border-radius: 0.5em 0em;
+}
+
+header .nav__credentials__menu__element:hover {
+  background-color: #8c8c8c;
+}
+
+@media screen and (max-width: 600px) {
+  header > .logo {
+    margin-top: 0.25em;
+    width: 3em;
+    margin-left: -0.25em;
+    margin-bottom: 0px;
+    margin-right: 0.25em;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  header .nav__buttons {
+    font-size: 1.75em;
+  }
+}
+
+.posts-wrapper {
+  text-decoration: none;
+}
+
+.posts-wrapper > a {
+  text-decoration: none;
+  color: #222233;
+}
+
+.post {
+  width: 100%;
+  text-decoration: none;
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.post__wrapper {
+  max-height: 28em;
+  overflow: hidden;
+  background-color: white;
+}
+
+.post__wrapper__image {
+  width: 100%;
+}
+
+.post__title {
+  font-size: 2em;
+  padding: 0.5em 0.25em;
+  background-color: white;
+  margin-top: 4px;
+  margin-bottom: 0px;
+}
+
+.post__preview {
+  display: -webkit-box;
+  background-color: white;
+  padding: 0.5em 0.25em 0em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.post__buttons {
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.post__buttons__delete {
+  color: #c51717;
+}
+
+.post__buttons__modify {
+  text-decoration: none;
+}
+
+.post__buttons__modify > a {
+  text-decoration: none;
+  color: #222233;
+}
+
+.post__buttons__element {
+  padding: 0.75em 1em;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: #222233;
+}
+
+.post__buttons__element:hover {
+  background-color: #8c8c8c;
+}
+
+.post__credentials {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: white;
+  border-radius: 1em 0px 0px 0px;
+  padding-right: 1em;
+}
+
+.post__credentials__userwrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: bold;
+}
+
+.post__credentials__userwrapper > .avatar {
+  width: 3em;
+  height: 3em;
+  border-radius: 1em 0px 0px 0px;
+  overflow: hidden;
+  margin-right: 1em;
+}
+
+.post__credentials__userwrapper > .avatar > img {
+  width: 100%;
+}
+
+@media screen and (max-width: 375px) {
+  .post__buttons__element {
+    padding: 0.75em 0.5em;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .post__wrapper {
+    max-height: 36em;
+  }
+}
+
+.back-button__content {
+  background-color: white;
+  margin-top: 1em;
+  padding: 0.75em 0.25em;
+  border-radius: 1em 0px 0px 0px;
+  cursor: pointer;
+}
+
+.postsa {
+  width: 100%;
+  text-decoration: none;
+  margin-top: 2px;
+  padding-bottom: 1em;
+  background-color: white;
+}
+
+.postsa__image-wrapper {
+  background-color: white;
+}
+
+.postsa__image-wrapper > img {
+  width: 100%;
+}
+
+.postsa__title {
+  font-size: 2em;
+  padding: 0.5em 0.25em;
+  background-color: white;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.postsa__text {
+  background-color: white;
+  padding: 0.5em 0.25em 0.75em;
+}
+
+.postsa__controller {
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  cursor: pointer;
+}
+
+.postsa__controller__delete {
+  color: #c51717 !important;
+}
+
+.postsa__controller__modify {
+  text-decoration: none;
+}
+
+.postsa__controller__modify > a {
+  text-decoration: none;
+  color: #222233;
+}
+
+.postsa__controller__element {
+  padding: 0.75em 1em;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: #222233;
+}
+
+.postsa__controller__element:hover {
+  background-color: #8c8c8c;
+}
+
+.postsa__credentials {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: white;
+  padding-right: 1em;
+}
+
+.postsa__credentials__userwrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: bold;
+}
+
+.postsa__credentials__userwrapper > .avatar {
+  width: 3em;
+  height: 3em;
+  overflow: hidden;
+  margin-right: 1em;
+}
+
+.postsa__credentials__userwrapper > .avatar > img {
+  width: 100%;
+}
+
+@media screen and (max-width: 375px) {
+  .post__buttons__element {
+    padding: 0.75em 0.5em;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .post__wrapper {
+    max-height: 36em;
+  }
+}
+
+.form {
+  background-color: white;
+  padding-block: 0.75em;
+}
+
+.form > textarea {
+  width: 50%;
+  min-height: 5em;
+  resize: vertical;
+}
+
+.form__button {
+  margin-block: 1em;
+  background-color: #1f1b24;
+  padding: 0.5em 1.5em;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 1em 0em;
+  cursor: pointer;
+  color: white;
+  border: 2px solid #1f1b24;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.form__button:hover {
+  color: #f5af19;
+}
+
+.comment-form {
+  margin-top: 2px;
+}
+
+section {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 70em;
+}
+
+section > a {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 1070px) {
+  section {
+    width: 98%;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  section {
+    max-width: 60em;
+  }
+}
+/*# sourceMappingURL=App.css.map */

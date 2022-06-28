@@ -4,9 +4,9 @@ import ModPostForm from "../Components/ModPostForm";
 
 const ModifyPost = () => {
     return (
-        <main>
+        <section>
             <ModPostForm />           
-        </main>
+        </section>
     )
 }
 

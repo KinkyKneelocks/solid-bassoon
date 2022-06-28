@@ -6,6 +6,7 @@ import placeholder from "../Images/avatar-placeholder.webp"
 import Dropzone from "react-dropzone"
 import e from "cors";
 import DeleteMe from "../Components/DeleteMe";
+import ChangePasswordForm from "../Components/ChangePasswordForm";
 
 const Profile = () => {
     let navigate = useNavigate()
@@ -18,6 +19,8 @@ const Profile = () => {
     const [previewImage, setPreviewImage] = useState()
     const [usernameEditor, setUsernameEditor] = useState(false)
     const [ deletePromptOpen, setDeletePromptOpen] = useState(false)    
+
+    console.log(userData)
     
 
     useEffect(() => {
@@ -37,8 +40,7 @@ const Profile = () => {
             }
             return res.json()
         })
-        .then((data) => {
-            console.log(data[0])            
+        .then((data) => {           
             setUserData(data[0])
             if (data[0].profilepic === null) {
                 setPreviewImage(placeholder)
@@ -64,7 +66,6 @@ const Profile = () => {
     const handleChange = (event, dropfile) => {
         let customValue
         if (dropfile) {
-            console.log(dropfile)
             customValue = dropfile
             setUserData(prevFormData => {
                 return {
@@ -105,7 +106,6 @@ const Profile = () => {
                 }
             })
             .then((data) => {
-                console.log(data)
                 logMeOut()
             })
             .catch(error => {console.error(error)})
@@ -131,7 +131,7 @@ const Profile = () => {
             .catch(error => {console.error(error)})
         }
 
-        if (userData.file && (userData.userName || userData !== user)) {
+        if (userData.file && userData.userName && (userData.userName !== user)) {
             const fd = new FormData()
             fd.append('username', userData.userName)      
             fd.append('file', userData.file, userData.file.name)
@@ -169,7 +169,6 @@ const Profile = () => {
                 }
             })
             .then((data) => {
-                console.log(data)
                 logMeOut()
             })
         }
@@ -181,7 +180,7 @@ const Profile = () => {
 
 
     return (
-        <main>
+        <section>
             { deletePromptOpen && <DeleteMe togglePrompt={openDeletePrompt} /> }
 
             <form className="form user-form" onSubmit={handleSubmit}>
@@ -226,7 +225,9 @@ const Profile = () => {
 
             <button onClick={logMeOut}>Log me out</button>
             <button onClick={openDeletePrompt} > Delete me</button>
-        </main>
+
+            <ChangePasswordForm />
+        </section>
     )
 }
 

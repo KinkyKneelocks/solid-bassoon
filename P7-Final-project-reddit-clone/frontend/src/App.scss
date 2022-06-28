@@ -1,0 +1,26 @@
+@import './Styles/Components/header';
+@import './Styles/Components/previewPosts';
+@import './Styles/Components/postComplete';
+@import './Styles/Components/forms';
+
+section {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 70em;
+
+  & > a {
+    text-decoration: none;
+  }
+}
+
+@media screen and (max-width:1070px) {
+  section {
+    width: 98%;
+  }
+}
+
+@media screen and (min-width:1080px) {
+  section {
+    max-width: 60em;
+  }
+}
