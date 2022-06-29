@@ -3,7 +3,7 @@
 
     & > a {
         text-decoration: none;
-        color: #222233
+        color: #222233;
     }
 }
 
@@ -47,7 +47,7 @@
         justify-content: flex-start;   
         
         &__delete {
-            color: #c51717;
+            color: #c51717 !important;
         }
         
         &__modify {

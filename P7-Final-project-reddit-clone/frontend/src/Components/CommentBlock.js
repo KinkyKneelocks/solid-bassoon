@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { UserContext } from "../Services/UserContext"
 import Avatar from "./Avatar";
 import createDateFormat from "../Services/createDateFormat";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const CommentBlock = (props) => {
     let createdOnDate
@@ -33,7 +35,7 @@ const CommentBlock = (props) => {
     }
 
     return (
-        <section className="comment" id={props.commentid}>
+        <div className="comment" id={props.commentid}>
             <div className="comment__credentials">
                 <div className="comment__credentials__userwrapper">
                     <Avatar pic={props.userpic} />
@@ -47,10 +49,10 @@ const CommentBlock = (props) => {
             </div>
             { user === props.username &&
             <div className="comment__controller">
-                <div className="comment__controller__delete" data-commentid={props.commentid} onClick={deleteComment} >Delete comment</div>
+                <div className="comment__controller__delete comment__controller__element" data-commentid={props.commentid} onClick={deleteComment} ><FontAwesomeIcon icon={faTrash}/> Delete comment</div>
             </div>
             }
-        </section>
+        </div>
     )
 }
 

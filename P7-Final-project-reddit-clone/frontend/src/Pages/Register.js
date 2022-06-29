@@ -3,10 +3,10 @@ import RegistrationForm from "../Components/RegistrationForm"
 
 const Register = () => {
     return (
-        <section>
-            <h1>This is where the reg form goes.</h1>
+        <div className="registerprompt">   
+            <h1 className="registerprompt__h1">Register and join in on the fun!</h1>         
             <RegistrationForm />
-        </section>
+        </div>
     )
 }
 

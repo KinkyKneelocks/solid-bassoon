@@ -3,10 +3,10 @@ import LoginForm from "./LoginForm"
 
 const Login = () => {
     return (
-        <main>
-        <h1>Welcome to XXX! Log in to check out the goods! :) </h1>
+        <div className="loginprompt">
+        <h1 className="loginprompt__h1">Welcome to Groupomania! Log in to check out the goods! :) </h1>
         <LoginForm />
-        </main>
+        </div>
     )
 }
 

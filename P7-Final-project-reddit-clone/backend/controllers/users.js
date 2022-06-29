@@ -183,8 +183,7 @@ exports.deleteUser = (req, res, next) => {
 
 exports.getUserData = (req, res, next) => {
     try {
-        const findUser = `SELECT userName, profilepic from Users WHERE userName = "${req.body.username}"`;
-        console.log(req.body.username)
+        const findUser = `SELECT userName, profilepic from Users WHERE userName = "${req.body.username}"`;        
         db.query(findUser, (error, results, fields) => {
             if (error) {
                 res.status(400).json({

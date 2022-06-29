@@ -5,6 +5,7 @@ import PostComplete from "../Components/PostComplete"
 import AddCommentForm from "../Components/AddCommentForm"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons'
+import NoComment from "../Components/NoComments"
 
 const SinglePostView = () => {  
     let navigate = useNavigate()  
@@ -14,8 +15,12 @@ const SinglePostView = () => {
     const [toggleCommentReload, setToggleCommentReload] = useState(1)
 
     useEffect(() => {
-        let fetchPostData = fetch(`http://localhost:3000/api/posts/${postId}`)
-        let fetchCommentData = fetch(`http://localhost:3000/api/posts/comments/${postId}`)
+        let fetchPostData = fetch(`http://localhost:3000/api/posts/${postId}`, {
+            credentials: 'include'
+        })
+        let fetchCommentData = fetch(`http://localhost:3000/api/posts/comments/${postId}`, {
+            credentials: 'include'
+        })
 
         Promise.all([fetchPostData, fetchCommentData])
         .then(values => {
@@ -33,6 +38,7 @@ const SinglePostView = () => {
     useEffect(() => {
         let fetchCommentData = `http://localhost:3000/api/posts/comments/${postId}`
         fetch(fetchCommentData, {
+            credentials: 'include',
             headers : { 
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -58,6 +64,8 @@ const SinglePostView = () => {
         return <CommentBlock username={comment.userName} text={comment.commentText} createdon={comment.createdOn} commentid={comment.commentId} toggleReload={renderComments} userpic={comment.profilepic} />
     })
 
+    console.log(allComments.length)
+
     return (
         <section>
             <div className="back-button">
@@ -75,14 +83,14 @@ const SinglePostView = () => {
                 userpic={postData.profilepic}
                 />
 
-            <section>
+            <div>
                 <AddCommentForm postId={postId} toggleReload={renderComments} />               
-            </section>
+            </div>
 
 
-            <section className="comments">
-                {allComments}
-            </section>
+            <div className="comments">
+                { allComments.length === 0 ? <NoComment /> : allComments }                
+            </div>
         </section>
     )
 }

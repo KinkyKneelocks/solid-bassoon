@@ -9,9 +9,10 @@ header {
     min-height: 4rem;  
     background: #1f1b24;
     color: white;
-    padding-left: 0.5em;
-    padding-right: 0.5em;    
     max-height: 5rem;
+    top: 0;
+    z-index: 99;
+    position: sticky;
 
     .logo {
       margin-top: -102px;
@@ -92,7 +93,8 @@ header {
           position: absolute;
           width: 115%;
           background-color: #1f1b24;
-          top: 40px;          
+          top: 40px;   
+          z-index: 9999;       
 
           &__element {            
             cursor: pointer;

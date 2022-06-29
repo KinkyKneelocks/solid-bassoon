@@ -1,9 +1,18 @@
 @import './Styles/Components/header';
 @import './Styles/Components/previewPosts';
 @import './Styles/Components/postComplete';
+@import './Styles/Components/createPost';
 @import './Styles/Components/forms';
+@import './Styles/Components/noComments';
+@import './Styles/Components/deletePrompt';
+@import './Styles/Components/loginPrompt';
+@import './Styles/Components/_footer';
 
-section {
+body {
+background-color: wheat;
+}
+
+section, main {
   margin-inline: auto;
   width: 100%;
   max-width: 70em;
@@ -13,14 +22,25 @@ section {
   }
 }
 
+.profile-page {
+  background-color: white;
+  position: relative;
+
+  & h3 {
+    font-size: 1.75em;
+    padding-top: 1em;
+    padding-left: 1em;
+  }
+}
+
 @media screen and (max-width:1070px) {
-  section {
+  section, main {
     width: 98%;
   }
 }
 
 @media screen and (min-width:1080px) {
-  section {
+  section, main {
     max-width: 60em;
   }
 }

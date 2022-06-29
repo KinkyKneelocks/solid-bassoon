@@ -10,11 +10,11 @@ const Home = () => {
     const { user, setUser } = useContext(UserContext)
 
     return (
-        <section>
+        <main>
             { user !== false && 
                 (user ? <Posts /> : <Login />)
             }
-        </section>
+        </main>
     )
 }
 

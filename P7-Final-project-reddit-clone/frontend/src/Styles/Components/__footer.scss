@@ -1,0 +1,25 @@
+.footer {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1f1b24;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+
+    &__text {
+        margin-inline: 0.5em;
+        color: white;
+        font-weight: bold;
+    }
+
+    &__image {
+        height: 100%;
+        margin-inline: 0.5em;
+
+        & img {
+            height: 100%;
+        }
+    }
+}

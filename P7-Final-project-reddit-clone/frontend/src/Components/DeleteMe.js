@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../Services/UserContext"
 import logout from "../Services/LogoutFunction";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 const DeleteMe = (props) => {
     let navigate = useNavigate()
@@ -60,22 +62,27 @@ const DeleteMe = (props) => {
     }
 
     return (
-        <div className="delete-prompt" >
-            <div className="delete-prompt__close-btn" onClick={props.togglePrompt} >Close</div>
-            <form className="deleteme-form form" onSubmit={handleSubmit}>
-                <input 
-                    type="text" 
-                    name="username" 
-                    onChange={handleChange} 
-                    placeholder={user}
-                    value={formData.username}
-                    />
-            {submitDisabled ? 
-                <button type="submit" className="form__button form__button--disabled" disabled>Delete me</button> :
-                <button type="submit" className="form__button">Delete me</button>
-            }
-            </form>
+        <div className="delete-prompt__wrapper" onClick={(event) => {if (event.target.className === 'delete-prompt__wrapper'){props.togglePrompt()}}}>
+            <div className="delete-prompt" >
+                <h3>Do you want to delete your user profile?</h3>
+                <p>Type in your username below and hit the button</p>
+                <p>Notice: doing so will permanently delete all your credentials.</p>
+                <div className="delete-prompt__close-btn" onClick={props.togglePrompt} ><FontAwesomeIcon icon={faXmark}/></div>
+                <form className="deleteme-form form" onSubmit={handleSubmit}>
+                    <input 
+                        type="text" 
+                        name="username" 
+                        onChange={handleChange} 
+                        placeholder={user}
+                        value={formData.username}
+                        />
+                {submitDisabled ? 
+                    <button type="submit" className="form__button form__button--disabled" disabled>Delete me</button> :
+                    <button type="submit" className="form__button">Delete me</button>
+                }
+                </form>
 
+            </div>
         </div>
     )
 }

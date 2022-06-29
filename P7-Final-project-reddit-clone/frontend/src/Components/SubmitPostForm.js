@@ -3,6 +3,8 @@ import { UserContext } from "../Services/UserContext"
 import { useNavigate } from "react-router-dom"
 import Dropzone, { useDropzone } from "react-dropzone"
 import e from "cors";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDiagramNext } from '@fortawesome/free-solid-svg-icons'
 
 
 const SubmitPostForm = () => {
@@ -12,6 +14,7 @@ const SubmitPostForm = () => {
     const [dropzoneLabel, setDropzoneLabel] = useState("Drag 'n' drop some files here, or click to select files")
     const [dropzoneIsActive, setDropzoneIsActive] = useState(false)
     const [previewImage, setPreviewImage] = useState()
+    const [showIcon, setShowIcon] = useState(true)
     const [formData, setFormData] = useState({
         userName: user,
         title: '',
@@ -108,7 +111,8 @@ const SubmitPostForm = () => {
                 onDrop={(files) => {                    
                     handleChange(e, files[0])
                     setDropzoneLabel(files[0].name)
-                    setDropzoneIsActive(true)                    
+                    setDropzoneIsActive(true)
+                    setShowIcon(false)                    
                     setPreviewImage(URL.createObjectURL(files[0]))                    
                 }}
                 maxFiles={1} 
@@ -120,8 +124,9 @@ const SubmitPostForm = () => {
                     {({getRootProps, getInputProps}) => (
                         <div {...getRootProps()} className={ dropzoneIsActive ? "form__dropzone form__dropzone--active" : "form__dropzone"}>
                             <input {...getInputProps()} name="file" />
-                            <p>{dropzoneLabel}</p>
-                            { previewImage && <div className="form__previewwrapper"><img className="form__previewwrapper__previewImage" src={previewImage} /></div> }
+                            {showIcon && <p className="form__dropzone__icon"> <FontAwesomeIcon icon={faDiagramNext}/></p>}                            
+                            <p className="form__dropzone__label">{dropzoneLabel}</p>
+                            { previewImage && <div className="form__previewwrapper"><FontAwesomeIcon className="form__previewwrapper__icon" icon={faDiagramNext} /><img className="form__previewwrapper__previewImage" src={previewImage} /></div> }
                             </div>
                 )}
             </Dropzone>

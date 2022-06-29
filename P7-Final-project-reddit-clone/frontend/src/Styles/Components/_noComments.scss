@@ -1,0 +1,19 @@
+.nocomment {
+    background-color: white;
+    text-align: center;
+    margin-top: 4px;
+    height: 25vh;
+    padding-block: 5em;
+    padding-inline: 1em;
+    color: #222233;
+
+    &__icon {
+        font-size: 5em;
+    }
+
+    &__text {
+        font-size: 1.25em;
+        font-weight: bold;
+        margin-block: 1em;
+    }
+}

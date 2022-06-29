@@ -9,9 +9,11 @@ header {
   min-height: 4rem;
   background: #1f1b24;
   color: white;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
   max-height: 5rem;
+  top: 0;
+  z-index: 99;
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 header .logo {
@@ -106,6 +108,7 @@ header .nav__credentials__menu {
   width: 115%;
   background-color: #1f1b24;
   top: 40px;
+  z-index: 9999;
 }
 
 header .nav__credentials__menu__element {
@@ -195,7 +198,7 @@ header .nav__credentials__menu__element:hover {
 }
 
 .post__buttons__delete {
-  color: #c51717;
+  color: #c51717 !important;
 }
 
 .post__buttons__modify {
@@ -265,6 +268,88 @@ header .nav__credentials__menu__element:hover {
   .post__wrapper {
     max-height: 36em;
   }
+}
+
+.comment {
+  background-color: white;
+  overflow: hidden;
+  border-radius: 1em 0em 0em 0em;
+  margin-top: 4px;
+}
+
+.comment__controller {
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  cursor: pointer;
+}
+
+.comment__controller__delete {
+  color: #c51717 !important;
+}
+
+.comment__controller__modify {
+  text-decoration: none;
+}
+
+.comment__controller__modify > a {
+  text-decoration: none;
+  color: #222233;
+}
+
+.comment__controller__element {
+  padding: 0.75em 1em;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: #222233;
+}
+
+.comment__controller__element:hover {
+  background-color: #8c8c8c;
+}
+
+.comment__content {
+  padding: 1em;
+}
+
+.comment__credentials {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: white;
+  padding-right: 1em;
+  border-bottom: 1px solid lightgrey;
+}
+
+.comment__credentials__userwrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: bold;
+}
+
+.comment__credentials__userwrapper > .avatar {
+  width: 3em;
+  height: 3em;
+  overflow: hidden;
+  margin-right: 1em;
+}
+
+.comment__credentials__userwrapper > .avatar > img {
+  width: 100%;
 }
 
 .back-button__content {
@@ -386,15 +471,97 @@ header .nav__credentials__menu__element:hover {
   }
 }
 
+.postsubmit__title {
+  background-color: white;
+  margin: 0;
+  padding: 1em;
+  margin-top: 1em;
+}
+
 .form {
   background-color: white;
   padding-block: 0.75em;
+}
+
+.form__previewwrapper {
+  width: 94%;
+  margin: 1em;
+  border-radius: 1em;
+  overflow: hidden;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form__previewwrapper__icon {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 5em;
+  color: #6fa3e6;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  opacity: 0;
+}
+
+.form__previewwrapper__previewImage {
+  width: 100%;
+}
+
+.form__dropzone {
+  width: 50%;
+  min-height: 7em;
+  text-align: center;
+  border: 5px dashed #1f1b24;
+  border-radius: 1em;
+  cursor: pointer;
+  color: #1f1b24;
+}
+
+.form__dropzone--active {
+  border: 5px dashed #8be98e;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.form__dropzone--active:hover {
+  border: 5px dashed #6fa3e6;
+}
+
+.form__dropzone--active:hover .form__previewwrapper__icon {
+  opacity: 1;
+}
+
+.form__dropzone__icon {
+  font-size: 4em;
+  margin-block: 0.25em;
+}
+
+.form input {
+  width: 50%;
+  min-height: 2em;
+  border-radius: 0.5em;
+  border: 2px solid #1f1b24;
+  text-indent: 5px;
+}
+
+.form input:focus {
+  border: 2px solid #f12711;
 }
 
 .form > textarea {
   width: 50%;
   min-height: 5em;
   resize: vertical;
+  border-radius: 0.5em;
+  border: 2px solid #1f1b24;
+  text-indent: 5px;
+}
+
+.form > textarea:focus {
+  border: 2px solid #f12711;
 }
 
 .form__button {
@@ -415,28 +582,306 @@ header .nav__credentials__menu__element:hover {
   color: #f5af19;
 }
 
-.comment-form {
-  margin-top: 2px;
+.form__button--alt {
+  background-color: white;
+  color: #1f1b24;
 }
 
-section {
+.form__button--disabled {
+  background-color: #a9a9aa;
+  border: 2px solid #a9a9aa;
+}
+
+.form__button--disabled:hover {
+  color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .form input, .form textarea {
+    width: 70%;
+  }
+  .form__previewwrapper {
+    width: 88%;
+  }
+  .form__dropzone {
+    width: 70%;
+  }
+}
+
+.misc-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 50%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.comment-form {
+  margin-top: 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.postsubmit-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.postsubmit-form > textarea {
+  margin-block: 1em;
+}
+
+.password-form, .deleteme-form, .login-form, .registration-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.password-form input, .deleteme-form input, .login-form input, .registration-form input {
+  margin-block: 0.5em;
+}
+
+.user-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.user-form > textarea {
+  margin-block: 1em;
+}
+
+.form__user__wrapper {
+  width: 50%;
+  margin-block: 0.5em;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.form__user__wrapper input {
+  font-size: 1em;
+  padding-block: 0em;
+}
+
+@media screen and (max-width: 600px) {
+  .form__user__wrapper {
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+  }
+}
+
+.nocomment {
+  background-color: white;
+  text-align: center;
+  margin-top: 4px;
+  height: 25vh;
+  padding-block: 5em;
+  padding-inline: 1em;
+  color: #222233;
+}
+
+.nocomment__icon {
+  font-size: 5em;
+}
+
+.nocomment__text {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-block: 1em;
+}
+
+.delete-prompt {
+  background-color: white;
+  width: 80%;
+  margin-inline: auto;
+  padding: 0.5em;
+  border: 2px solid #1f1b24;
+  border-radius: 1em;
+  position: relative;
+  margin-top: 10vw;
+}
+
+.delete-prompt__close-btn {
+  position: absolute;
+  top: 1px;
+  right: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.delete-prompt p {
+  margin-inline: 2em;
+}
+
+.delete-prompt__wrapper {
+  position: fixed;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.75);
+  width: 100vw;
+  height: 100vh;
+  margin-inline: 0em;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+.loginprompt, .registerprompt {
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 1.5em;
+  padding: 2.5em 1.5em;
+}
+
+.loginprompt__h1, .registerprompt__h1 {
+  margin-top: 0.5em;
+}
+
+.login-form, .registration-form {
+  width: 100%;
+}
+
+@media screen and (max-width: 920px) {
+  .loginprompt__h1, .registerprompt__h1 {
+    font-size: 1.5em;
+  }
+  .login-form, .registration-form {
+    width: 100%;
+    -webkit-box-align: normal;
+        -ms-flex-align: normal;
+            align-items: normal;
+  }
+  .login-form input, .registration-form input {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .loginprompt, .registerprompt {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .login-form, .registration-form {
+    width: 80%;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+.footer {
+  height: 2.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #1f1b24;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.footer__text {
+  margin-inline: 0.5em;
+  color: white;
+  font-weight: bold;
+}
+
+.footer__image {
+  height: 100%;
+  margin-inline: 0.5em;
+}
+
+.footer__image img {
+  height: 100%;
+}
+
+body {
+  background-color: wheat;
+}
+
+section, main {
   margin-inline: auto;
   width: 100%;
   max-width: 70em;
 }
 
-section > a {
+section > a, main > a {
   text-decoration: none;
 }
 
+.profile-page {
+  background-color: white;
+  position: relative;
+}
+
+.profile-page h3 {
+  font-size: 1.75em;
+  padding-top: 1em;
+  padding-left: 1em;
+}
+
 @media screen and (max-width: 1070px) {
-  section {
+  section, main {
     width: 98%;
   }
 }
 
 @media screen and (min-width: 1080px) {
-  section {
+  section, main {
     max-width: 60em;
   }
 }

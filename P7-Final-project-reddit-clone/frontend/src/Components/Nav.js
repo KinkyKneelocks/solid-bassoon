@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { UserContext } from "../Services/UserContext"
 import UserDataMenu from "./UserDataMenu"
 import mobileLogo from "../Images/mobile-icon.svg"
@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapSigns, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 const Nav = () => {
+    let navigate = useNavigate()
     const { user, setUser } = useContext(UserContext)
     const [width, setWidth] = useState(window.innerWidth)      
   
@@ -31,7 +32,7 @@ const Nav = () => {
     return (
         <header>
             
-            <div className="logo">
+            <div className="logo" onClick={() => {navigate('/')}}>
                 <img src={width > 600 ? desktopLogo : mobileLogo} />
             </div>
 
@@ -45,8 +46,8 @@ const Nav = () => {
             </nav> 
             :             
             <nav className="nav nav--alt">
-                <div className="nav__buttons">
-                    <Link key="login" to="/">Login</Link>
+                <div className="nav__buttons" style={{fontSize: '1.25em'}}>
+                    <Link key="login" to="/" >Login</Link>
                     <Link key="register" to="/register">Register</Link>
                 </div>
             </nav> }

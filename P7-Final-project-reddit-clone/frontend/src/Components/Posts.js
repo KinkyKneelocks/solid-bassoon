@@ -6,7 +6,9 @@ const Posts = () => {
     const [toggleReload, setToggleReload] =useState(1)
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/posts/')
+        fetch('http://localhost:3000/api/posts/', {
+            credentials: 'include',
+        })
         .then(res => res.json())
         .then(data => setPosts(data))
         .catch((error) => {

@@ -9,6 +9,7 @@ import Profile from './Pages/Profile'
 import { UserContext } from "./Services/UserContext"
 import SinglePostView from './Pages/SinglePostView';
 import ModifyPost from './Pages/ModifyPost';
+import Footer from './Components/Footer'
 
 
 
@@ -54,6 +55,7 @@ function App() {
           <Route path="/posts/:postId/modify" element={<ModifyPost />} />
           <Route path="/profile" element={<Profile />} />    
         </Routes>
+        
       </UserContext.Provider>
     </Router>
   );

@@ -1,0 +1,42 @@
+.loginprompt, .registerprompt {
+    background-color: white;
+    display: flex;
+    margin-top: 1.5em;
+    padding: 2.5em 1.5em;
+
+    &__h1 {
+        margin-top: 0.5em;
+    }
+  
+}
+
+.login-form, .registration-form {
+    width: 100%;
+}
+
+@media screen and (max-width: 920px) {
+    .loginprompt__h1, .registerprompt__h1 {
+        font-size: 1.5em;
+    }
+
+    .login-form, .registration-form {
+        width: 100%;
+        align-items: normal;        
+
+        & input {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 660px) {
+    .loginprompt, .registerprompt {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-form, .registration-form {
+        width: 80%;
+        align-items: center;
+    }
+}

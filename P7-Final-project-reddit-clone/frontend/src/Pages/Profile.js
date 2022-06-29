@@ -7,6 +7,8 @@ import Dropzone from "react-dropzone"
 import e from "cors";
 import DeleteMe from "../Components/DeleteMe";
 import ChangePasswordForm from "../Components/ChangePasswordForm";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDiagramNext } from '@fortawesome/free-solid-svg-icons'
 
 const Profile = () => {
     let navigate = useNavigate()
@@ -180,7 +182,8 @@ const Profile = () => {
 
 
     return (
-        <section>
+        <section className="profile-page">
+            <h3>Change your userprofile below!</h3>
             { deletePromptOpen && <DeleteMe togglePrompt={openDeletePrompt} /> }
 
             <form className="form user-form" onSubmit={handleSubmit}>
@@ -211,21 +214,22 @@ const Profile = () => {
                 }}
                 >
                     {({getRootProps, getInputProps}) => (
-                        <div {...getRootProps()} className="form__dropzone">
+                        <div {...getRootProps()} className="form__dropzone form__dropzone--active">
                             <input {...getInputProps()} name="file" />
                             <p>{dropzoneLabel}</p>
-                            { previewImage && <div className="form__previewwrapper"><img className="form__previewwrapper__previewImage" src={previewImage} /></div> }
+                            { previewImage && <div className="form__previewwrapper"><FontAwesomeIcon className="form__previewwrapper__icon" icon={faDiagramNext} /><img className="form__previewwrapper__previewImage" src={previewImage} /></div> }
                             </div>
                 )}
             </Dropzone>
 
-            <button className="form__button" type="submit">Submit</button>
+            <button className="form__button" type="submit">Change my look!</button>
 
             </form>
-
-            <button onClick={logMeOut}>Log me out</button>
-            <button onClick={openDeletePrompt} > Delete me</button>
-
+            <div className="misc-buttons">
+                <button className="form__button form__button--alt" onClick={logMeOut}>Log me out</button>
+                <button className="form__button form__button--alt" onClick={openDeletePrompt} > Delete me</button>
+            </div>
+            <h3>Change your password here!</h3>
             <ChangePasswordForm />
         </section>
     )
