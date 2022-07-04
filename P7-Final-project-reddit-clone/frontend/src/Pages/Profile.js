@@ -20,9 +20,7 @@ const Profile = () => {
     const [dropzoneLabel, setDropzoneLabel] = useState("Click here to change your profile picture")    
     const [previewImage, setPreviewImage] = useState()
     const [usernameEditor, setUsernameEditor] = useState(false)
-    const [ deletePromptOpen, setDeletePromptOpen] = useState(false)    
-
-    console.log(userData)
+    const [ deletePromptOpen, setDeletePromptOpen] = useState(false)   
     
 
     useEffect(() => {

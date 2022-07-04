@@ -60,6 +60,14 @@
             transition: 0.3s;   
             color: #222233;
             
+            &__active-like {
+                color: rgb(24, 173, 24) !important;
+            }
+
+            &__active-dislike {
+                color: rgb(238, 66, 13) !important;
+            }
+            
             &:hover {
                 background-color: #8c8c8c;
             }

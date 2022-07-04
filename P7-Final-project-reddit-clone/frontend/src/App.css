@@ -217,6 +217,14 @@ header .nav__credentials__menu__element:hover {
   color: #222233;
 }
 
+.post__buttons__element__active-like {
+  color: #18ad18 !important;
+}
+
+.post__buttons__element__active-dislike {
+  color: #ee420d !important;
+}
+
 .post__buttons__element:hover {
   background-color: #8c8c8c;
 }
@@ -418,6 +426,14 @@ header .nav__credentials__menu__element:hover {
   -webkit-transition: 0.3s;
   transition: 0.3s;
   color: #222233;
+}
+
+.postsa__controller__element__active-like {
+  color: #18ad18 !important;
+}
+
+.postsa__controller__element__active-dislike {
+  color: #ee420d !important;
 }
 
 .postsa__controller__element:hover {

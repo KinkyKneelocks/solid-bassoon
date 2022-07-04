@@ -30,17 +30,24 @@ db.connect((err) => {
 
 
 
-/*
-let myQuery = `DELETE FROM Users WHERE userName = "Testuser555"`;
+
+let myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, COUNT(Likes.userName) AS likeCount, COUNT(Dislikes.userName) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = 'admin') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.userName = Posts.userName AND Likes.userName = 'admin') AS disliked
+FROM Posts 
+LEFT JOIN Comments ON Comments.postId = Posts.PostId 
+LEFT JOIN Users ON Users.userName = Posts.userName 
+LEFT JOIN Likes ON Likes.postId = Posts.PostId  
+LEFT JOIN Dislikes ON Dislikes.userName = Posts.PostId  
+GROUP BY Posts.postId 
+ORDER BY Posts.createdOn DESC;`;
+
 db.query(myQuery, 
     (error, results, fields) => {
         if (error) {
-            throw error.errno;
+            throw error;
             return;
         }
         console.log(results);   
 }) 
-*/
 
 
 

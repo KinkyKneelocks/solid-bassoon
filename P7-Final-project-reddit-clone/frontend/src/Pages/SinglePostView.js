@@ -8,17 +8,19 @@ import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons'
 import NoComment from "../Components/NoComments"
 
 const SinglePostView = () => {  
-    let navigate = useNavigate()  
     let { postId } = useParams()
+    let navigate = useNavigate()  
     const [postData, setPostData] = useState({})
     const [commentData, setCommentData] = useState([])
     const [toggleCommentReload, setToggleCommentReload] = useState(1)
 
+
     useEffect(() => {
-        let fetchPostData = fetch(`http://localhost:3000/api/posts/${postId}`, {
+        let item = postId
+        let fetchPostData = fetch(`http://localhost:3000/api/posts/${item}`, {
             credentials: 'include'
         })
-        let fetchCommentData = fetch(`http://localhost:3000/api/posts/comments/${postId}`, {
+        let fetchCommentData = fetch(`http://localhost:3000/api/posts/comments/${item}`, {
             credentials: 'include'
         })
 
@@ -33,10 +35,11 @@ const SinglePostView = () => {
         .catch((error) => {
             console.error(error)
         })
-    }, [])
+    }, [postId])
 
     useEffect(() => {
-        let fetchCommentData = `http://localhost:3000/api/posts/comments/${postId}`
+        let item = postId
+        let fetchCommentData = `http://localhost:3000/api/posts/comments/${item}`
         fetch(fetchCommentData, {
             credentials: 'include',
             headers : { 
@@ -52,7 +55,7 @@ const SinglePostView = () => {
             }
         })
         .then(data => setCommentData(data))        
-    }, [toggleCommentReload])
+    }, [toggleCommentReload, postId])
 
     const renderComments = () => {
         setToggleCommentReload((prevValue) => {
@@ -64,8 +67,6 @@ const SinglePostView = () => {
         return <CommentBlock username={comment.userName} text={comment.commentText} createdon={comment.createdOn} commentid={comment.commentId} toggleReload={renderComments} userpic={comment.profilepic} />
     })
 
-    console.log(allComments.length)
-
     return (
         <section>
             <div className="back-button">
@@ -73,15 +74,21 @@ const SinglePostView = () => {
                     <FontAwesomeIcon icon={faAnglesLeft}/> <b>All posts</b>
                 </div>
             </div>
-            <PostComplete 
-                username={postData.userName} 
-                title={postData.Title} 
-                imgurl={postData.imgUrl} 
-                postid={postData.postId} 
-                text={postData.Description} 
-                createdon={postData.createdOn} 
-                userpic={postData.profilepic}
+            { postData.postId && 
+                <PostComplete 
+                    likes={postData.likeCount} 
+                    ownLike={postData.liked} 
+                    ownDislike={postData.disliked} 
+                    dislikes={postData.DislikeCount}
+                    username={postData.userName} 
+                    title={postData.Title} 
+                    imgurl={postData.imgUrl} 
+                    postid={postData.postId} 
+                    text={postData.Description} 
+                    createdon={postData.createdOn} 
+                    userpic={postData.profilepic}
                 />
+            }
 
             <div>
                 <AddCommentForm postId={postId} toggleReload={renderComments} />               

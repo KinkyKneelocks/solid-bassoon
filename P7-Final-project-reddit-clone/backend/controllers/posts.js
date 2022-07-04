@@ -17,8 +17,16 @@ const sqlConfig = {
 const db = sql.createConnection(sqlConfig);
 
 exports.getAllPosts = (req, res, next) => {
+    console.log(req.username)
     try {
-        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, Users.profilepic FROM Posts LEFT JOIN Comments ON Comments.postId = Posts.PostId LEFT JOIN Users ON Users.userName = Posts.userName GROUP BY Posts.postId ORDER BY Posts.createdOn DESC;`
+        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, COUNT(Likes.userName) AS likeCount, COUNT(Dislikes.userName) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Likes.userName = '${req.username}') AS disliked
+        FROM Posts 
+        LEFT JOIN Comments ON Comments.postId = Posts.PostId 
+        LEFT JOIN Users ON Users.userName = Posts.userName 
+        LEFT JOIN Likes ON Likes.postId = Posts.PostId  
+        LEFT JOIN Dislikes ON Dislikes.userName = Posts.PostId  
+        GROUP BY Posts.postId 
+        ORDER BY Posts.createdOn DESC;`;
         db.query(myQuery, (error, results, fields) => {
             if (error) {
                 console.log(error)
@@ -38,11 +46,14 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-    const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, Users.profilepic FROM Posts 
-    LEFT JOIN Comments ON Comments.postId = Posts.PostId
-    LEFT JOIN Users ON Users.userName = Posts.userName
+    const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, COUNT(Likes.userName) AS likeCount, COUNT(Dislikes.userName) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Likes.userName = '${req.username}') AS disliked
+    FROM Posts 
+    LEFT JOIN Comments ON Comments.postId = Posts.PostId 
+    LEFT JOIN Users ON Users.userName = Posts.userName 
+    LEFT JOIN Likes ON Likes.postId = Posts.PostId  
+    LEFT JOIN Dislikes ON Dislikes.userName = Posts.PostId  
     WHERE Posts.postId = "${req.params.id}"
-    GROUP BY Posts.postId`;
+    GROUP BY Posts.postId;`;
     try {        
         db.query(myQuery, (error, results, fields) => {
             if (error) {
@@ -105,7 +116,9 @@ exports.deletePost = (req, res, next) => {
     try {
         const selectQuery = `SELECT ImgUrl FROM Posts WHERE postId = "${req.params.id}";`
         const deleteQuery = `DELETE FROM Posts WHERE postId = "${req.params.id}";`;
-        const deleteCommentsQuery = `DELETE FROM Comments WHERE postId = "${req.params.id}";`;
+        const deleteLikes = `DELETE FROM Likes WHERE postId = "${req.params.id}";`;
+        const deleteDislikes = `DELETE FROM Likes WHERE postId = "${req.params.id}";`;
+        const deleteCommentsQuery = `DELETE FROM Dislikes WHERE postId = "${req.params.id}";`;
         db.query(selectQuery, (error, results, fields) => {
             if (error) {
                 res.status(400).json({
@@ -139,7 +152,23 @@ exports.deletePost = (req, res, next) => {
                         })
                         return;
                     }
-                    res.status(200).json(results)
+                    db.query(deleteLikes, (error, results, fields) => {
+                        if (error) {
+                            res.status(400).json({
+                                error: error
+                            })
+                            return
+                        }
+                        db.query(deleteDislikes, (error, results, fields) => {
+                            if (error) {
+                                res.status(400).json({
+                                    error: error
+                                })
+                                return
+                            }
+                            res.status(200).json(results)
+                        })
+                    })
                 })
             })
         })

@@ -21,7 +21,7 @@ const Posts = () => {
     }
 
     let allPosts = posts.map((post) => {       
-            return <PostPreview key={post.postId} createdon={post.createdOn} userpic={post.profilepic} title={post.Title} imgUrl={post.imgUrl} commentCount={post.commentCount} postId={post.postId} username={post.userName} description={post.Description} toggleReload={toggleDelete} /> 
+            return <PostPreview key={post.postId} likes={post.likeCount} ownLike={post.liked} ownDislike={post.disliked} dislikes={post.DislikeCount} createdon={post.createdOn} userpic={post.profilepic} title={post.Title} imgUrl={post.imgUrl} commentCount={post.commentCount} postId={post.postId} username={post.userName} description={post.Description} toggleReload={toggleDelete} /> 
     })
 
     return (

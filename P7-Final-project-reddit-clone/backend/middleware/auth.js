@@ -18,7 +18,8 @@ module.exports = (req, res, next) => {
             })
             return;
         }
-        if (decoded) {            
+        if (decoded) { 
+            req.username = decoded.username         
             next()
         }
     })

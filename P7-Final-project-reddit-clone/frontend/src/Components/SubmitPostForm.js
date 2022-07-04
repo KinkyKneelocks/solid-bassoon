@@ -22,12 +22,10 @@ const SubmitPostForm = () => {
         file: null
     })
 
-    console.log(formData)
 
     const handleChange = (event, dropfile) => {
         let customValue
         if (dropfile) {
-            console.log(dropfile)
             customValue = dropfile
             setFormData(prevFormData => {
                 return {

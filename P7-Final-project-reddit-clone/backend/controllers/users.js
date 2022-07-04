@@ -147,6 +147,8 @@ exports.deleteUser = (req, res, next) => {
     const updatePosts = `UPDATE Posts SET userName = "<deleted user>" WHERE userName = "${req.body.username}"`
     const updateComments = `UPDATE Comments SET userName = "<deleted user>" WHERE userName = "${req.body.username}"`
     const deleteUser = `DELETE FROM Users WHERE userName = "${req.body.username}"`
+    const deleteLikes = `UPDATE Likes SET userName = "<deleted user>" WHERE userName = "${req.body.username}";`;
+    const deleteDislikes = `UPDATE Dislikes SET userName = "<deleted user>" WHERE userName = "${req.body.username}";`;
 
     try {
         db.query(updateComments, (error, results, fields) => {
@@ -170,7 +172,23 @@ exports.deleteUser = (req, res, next) => {
                         })
                         return
                     }
-                    res.status(200).json(results)
+                    db.query(deleteLikes, (error, results, fields) => {
+                        if (error) {
+                            res.status(400).json({
+                                error: error
+                            })
+                            return
+                        }
+                        db.query(deleteDislikes, (error, results, fields) => {
+                            if (error) {
+                                res.status(400).json({
+                                    error: error
+                                })
+                                return
+                            }
+                            res.status(200).json(results)
+                        })
+                    })
                 })
             })
         })
@@ -259,14 +277,15 @@ exports.changeUsername = (req, res, next) => {
                 })
                 return  
             }
-
-            /*if (results[0]) {
+/*
+            if (results[0]) {
                 res.status(409).json({
                     message: "Username alrady taken"
                 })
                 return
             }
             */
+            
 
             const olduser = results            
             const createNewUser = `INSERT INTO Users VALUES ("${req.body.newusername}", "${olduser[0].password}", "${olduser[0].profilepic}")`
@@ -293,15 +312,35 @@ exports.changeUsername = (req, res, next) => {
                             })
                             return
                         }
-                        const deleteUser = `DELETE FROM Users WHERE userName = "${olduser[0].userName}"`
-                        db.query(deleteUser, (error, results, fields) => {
+
+                        const updateLikes = `UPDATE Likes SET userName = "${req.body.newusername}" WHERE userName = "${olduser[0].userName}"`
+                        db.query(updateLikes, (error, results, fields) => {
                             if (error) {
                                 res.status(400).json({
                                     error: error
                                 })
                                 return
                             }
-                            res.status(200).json(results)
+                            const updatedDislikes = `UPDATE Dislikes SET userName = "${req.body.newusername}" WHERE userName = "${olduser[0].userName}"`
+                            db.query(updatedDislikes, (error, results, fields) => {
+                                if (error) {
+                                    res.status(400).json({
+                                        error: error
+                                    })
+                                    return
+                                }                           
+                        
+                                const deleteUser = `DELETE FROM Users WHERE userName = "${olduser[0].userName}"`
+                                db.query(deleteUser, (error, results, fields) => {
+                                    if (error) {
+                                        res.status(400).json({
+                                            error: error
+                                        })
+                                        return
+                                    }
+                                    res.status(200).json(results)
+                                })
+                            })
                         })
                     })
                 })

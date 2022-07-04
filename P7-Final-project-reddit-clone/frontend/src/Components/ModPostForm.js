@@ -30,7 +30,6 @@ const ModPostForm = () => {
             return res.json()
         })
         .then((data) => {
-            console.log(data[0])
             setFormData((prevFormData) => {
                 return (
                     {...prevFormData,
@@ -50,8 +49,8 @@ const ModPostForm = () => {
 
     const handleChange = (event, dropfile) => {
         let customValue
-        if (dropfile) {
-            console.log(dropfile)
+        if (dropfile) {          
+
             customValue = dropfile
             setFormData(prevFormData => {
                 return {
