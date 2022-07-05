@@ -15,7 +15,7 @@ const PostComplete = (props) => {
     let { postId } = useParams()
     let navigate = useNavigate() 
     let createdOnDate  
-    
+
     const toggleReaction = (event) => {
         event.preventDefault();        
         let reactionvalue        
@@ -67,6 +67,19 @@ const PostComplete = (props) => {
             setOwnLike(0)
             setOwnDislike(1)
         } 
+
+        fetch('http://localhost:3000/api/posts/reaction', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            console.log(data)
+        })
     }
 
     const deletePost = (event) => {
@@ -118,10 +131,10 @@ const PostComplete = (props) => {
 
                 <div className="postsa__controller">
                     <div onClick={toggleReaction} data-reactionvalue="1" className={ownLike == 1 ? "postsa__controller__element postsa__controller__element__active-like" : "postsa__controller__element"}>
-                        <FontAwesomeIcon icon={faThumbsUp} /> {likes}
+                        <FontAwesomeIcon icon={faThumbsUp} /> {!likes ? '0' : likes}
                     </div>
                     <div onClick={toggleReaction} data-reactionvalue="-1" className={ownDislike == 1 ? "postsa__controller__element postsa__controller__element__active-dislike" : "postsa__controller__element"}>
-                        <FontAwesomeIcon icon={faThumbsDown} /> {dislikes}
+                        <FontAwesomeIcon icon={faThumbsDown} /> {!dislikes ? '0' : dislikes}
                     </div>
                     
                     { user === props.username && <div className="postsa__controller__modify postsa__controller__element" data-post={props.postid}><Link to={`/posts/${postId}/modify`}><FontAwesomeIcon icon={faPuzzlePiece}/> Modify post</Link></div> }

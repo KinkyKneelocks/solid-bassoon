@@ -79,6 +79,19 @@ const PostPreview = (props) => {
             setOwnLike(0)
             setOwnDislike(1)
         } 
+
+        fetch('http://localhost:3000/api/posts/reaction', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((data) => {
+            console.log(data)
+        })
     }
 
     const deletePost = (event) => {
@@ -127,10 +140,10 @@ const PostPreview = (props) => {
                 
                 <div className="post__buttons">
                     <div onClick={toggleReaction} data-reactionvalue="1" className={ownLike == 1 ? "post__buttons__element post__buttons__element__active-like" : "post__buttons__element"}>
-                        <FontAwesomeIcon icon={faThumbsUp} /> {likes}
+                        <FontAwesomeIcon icon={faThumbsUp} /> {!likes ? '0' : likes}
                     </div>
                     <div onClick={toggleReaction} data-reactionvalue="-1" className={ownDislike == 1 ? "post__buttons__element post__buttons__element__active-dislike" : "post__buttons__element"}>
-                        <FontAwesomeIcon icon={faThumbsDown} /> {dislikes}
+                        <FontAwesomeIcon icon={faThumbsDown} /> {!dislikes ? '0' : dislikes}
                     </div>
                     <div className="post__buttons__comments post__buttons__element">
    

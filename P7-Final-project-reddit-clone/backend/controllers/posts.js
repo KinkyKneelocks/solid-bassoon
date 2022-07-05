@@ -16,15 +16,14 @@ const sqlConfig = {
 
 const db = sql.createConnection(sqlConfig);
 
-exports.getAllPosts = (req, res, next) => {
-    console.log(req.username)
+exports.getAllPosts = (req, res, next) => {    
     try {
-        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, COUNT(Likes.userName) AS likeCount, COUNT(Dislikes.userName) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Likes.userName = '${req.username}') AS disliked
+        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, (SELECT COUNT(Comments.userName) FROM Comments WHERE Comments.postId = Posts.postId) AS commentCount, (SELECT COUNT(Likes.userName) FROM Likes WHERE Likes.postId = Posts.postId) AS likeCount, (SELECT COUNT(Dislikes.userName) FROM Likes WHERE Dislikes.postId = Posts.postId) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Likes.userName = '${req.username}') AS disliked
         FROM Posts 
         LEFT JOIN Comments ON Comments.postId = Posts.PostId 
         LEFT JOIN Users ON Users.userName = Posts.userName 
         LEFT JOIN Likes ON Likes.postId = Posts.PostId  
-        LEFT JOIN Dislikes ON Dislikes.userName = Posts.PostId  
+        LEFT JOIN Dislikes ON Dislikes.postId = Posts.PostId  
         GROUP BY Posts.postId 
         ORDER BY Posts.createdOn DESC;`;
         db.query(myQuery, (error, results, fields) => {
@@ -46,14 +45,15 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-    const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, COUNT(Comments.userName) AS commentCount, COUNT(Likes.userName) AS likeCount, COUNT(Dislikes.userName) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Likes.userName = '${req.username}') AS disliked
+    const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, (SELECT COUNT(Comments.userName) FROM Comments WHERE Comments.postId = Posts.postId) AS commentCount, (SELECT COUNT(Likes.userName) FROM Likes WHERE Likes.postId = Posts.postId) AS likeCount, (SELECT COUNT(Dislikes.userName) FROM Likes WHERE Dislikes.postId = Posts.postId) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Likes.userName = '${req.username}') AS disliked
     FROM Posts 
     LEFT JOIN Comments ON Comments.postId = Posts.PostId 
     LEFT JOIN Users ON Users.userName = Posts.userName 
     LEFT JOIN Likes ON Likes.postId = Posts.PostId  
-    LEFT JOIN Dislikes ON Dislikes.userName = Posts.PostId  
-    WHERE Posts.postId = "${req.params.id}"
-    GROUP BY Posts.postId;`;
+    LEFT JOIN Dislikes ON Dislikes.postId = Posts.PostId 
+    WHERE Posts.postId = "${req.params.id}" 
+    GROUP BY Posts.postId`;
+
     try {        
         db.query(myQuery, (error, results, fields) => {
             if (error) {
@@ -270,6 +270,116 @@ exports.deleteComment = (req, res, next) => {
             }
             res.status(200).json(results)
         })
+    } catch (error) {
+        res.status(400).json({
+            error: error
+        })
+    }
+}
+
+exports.reactToPost = (req, res, next) => {
+    const addLike = `INSERT INTO Likes (userName, postId) VALUES ("${req.username}", "${req.body.postId}");`
+    const addDislike = `INSERT INTO Dislikes (userName, postId) VALUES ("${req.username}", "${req.body.postId}");`
+    const removeLike = `DELETE FROM Likes WHERE userName = "${req.username}" AND postId = "${req.body.postId}";`
+    const removeDislike = `DELETE FROM Dislikes WHERE userName = "${req.username}" AND postId = "${req.body.postId}";`
+    try {
+        if (req.body.previous == 0 && req.body.desired == 1) {
+            /* User wants to like */
+            db.query(addLike, (error, results, fields) => {
+                if (error) {
+                    console.log(error)
+                    res.status(400).json({
+                        error: error
+                    })
+                    return
+                }
+                res.status(200).json(results)
+            })
+        }
+
+        if (req.body.previous == 0 && req.body.desired == -1) {
+            /* User wants to dislike */
+            db.query(addDislike, (error, results, fields) => {
+                if (error) {
+                    res.status(400).json({
+                        error: error
+                    })
+                    return
+                }
+                res.status(200).json(results)
+            })
+            
+        }
+
+        if (req.body.previous == 1 && req.body.desired == 0) {
+            /* User wants to remove like */
+            db.query(removeLike, (error, results, fields) => {
+                if (error) {
+                    res.status(400).json({
+                        error: error
+                    })
+                    return
+                }
+                res.status(200).json(results)
+            })
+        }
+
+        if (req.body.previous == -1 && req.body.desired == 0) {
+            /* User wants to remove dislike */
+            db.query(removeDislike, (error, results, fields) => {
+                if (error) {
+                    res.status(400).json({
+                        error: error
+                    })
+                    return
+                }
+                res.status(200).json(results)
+            })
+        }
+
+        if (req.body.previous == -1 && req.body.desired == 1) {
+            /* User wants to remove dislike and add like */
+            db.query(removeDislike, (error, results, fields) => {
+                if (error) {
+                    res.status(400).json({
+                        error: error
+                    })
+                    return
+                }
+                db.query(addLike, (error, results, fields) => {
+                    if (error) {
+                        res.status(400).json({
+                            error: error
+                        })
+                        return
+                    }
+                    res.status(200).json(results)
+                })
+            })
+        }
+
+        if (req.body.previous == 1 && req.body.desired == -1) {
+            /* User wants to remove like and add dislike */
+            db.query(removeLike, (error, results, fields) => {
+                if (error) {
+                    res.status(400).json({
+                        error: error
+                    })
+                    return
+                }
+                db.query(addDislike, (error, results, fields) => {
+                    if (error) {
+                        res.status(400).json({
+                            error: error
+                        })
+                        return
+                    }
+                    res.status(200).json(results)
+                })
+            })
+        }
+
+
     } catch (error) {
         res.status(400).json({
             error: error

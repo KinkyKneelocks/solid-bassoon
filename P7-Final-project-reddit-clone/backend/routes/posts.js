@@ -23,4 +23,6 @@ router.get('/comments/:id', auth, postCtrl.getCommentsForPost);
 router.post('/comments', auth, postCtrl.addComment);
 router.delete('/comments/:id', auth, postCtrl.deleteComment);
 
+router.post('/reaction', auth, postCtrl.reactToPost);
+
 module.exports = router;
