@@ -126,12 +126,13 @@ exports.deletePost = (req, res, next) => {
                 })
                 return;
             }
-            console.log(results.ImgUrl);
-            if (results.ImgUrl !== undefined) {
-                const filename = json(results).ImgUrl.split('/images/')[1];
+
+            if (results[0].ImgUrl !== null) {
+                const filename = results[0].ImgUrl.split('/images/')[1];
+                console.log(filename)
                 fs.unlink('images/' + filename, (error) => {
                     if (error) {
-                        res.status(400).json({
+                        res.status(401).json({
                             error: error
                         })
                     }
@@ -140,14 +141,14 @@ exports.deletePost = (req, res, next) => {
 
             db.query(deleteCommentsQuery, (error, results, fields) => {
                 if (error) {
-                    res.status(400).json({
+                    res.status(402).json({
                         error: error
                     })
                     return;
                 }
-                db.query(deleteQuery, (error, results, fields) => {
+                db.query(deleteDislikes, (error, results, fields) => {
                     if (error) {
-                        res.status(400).json({
+                        res.status(403).json({
                             error: error
                         })
                         return;
@@ -159,7 +160,7 @@ exports.deletePost = (req, res, next) => {
                             })
                             return
                         }
-                        db.query(deleteDislikes, (error, results, fields) => {
+                        db.query(deleteQuery, (error, results, fields) => {
                             if (error) {
                                 res.status(400).json({
                                     error: error
