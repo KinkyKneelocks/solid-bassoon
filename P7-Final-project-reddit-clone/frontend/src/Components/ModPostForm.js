@@ -21,7 +21,9 @@ const ModPostForm = () => {
     })
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/posts/${postId}`)
+        fetch(`http://localhost:3000/api/posts/${postId}`, {
+            credentials: 'include',
+        })
         .then((res) => {
             if (res.status !== 200) {
                 throw Error('Cannot get post data')

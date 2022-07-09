@@ -165,7 +165,7 @@ exports.deleteUser = (req, res, next) => {
                     })
                     return
                 }
-                db.query(deleteUser, (error, results, fields) => {
+                db.query(deleteDislikes, (error, results, fields) => {
                     if (error) {
                         res.status(400).json({
                             error: error
@@ -179,7 +179,7 @@ exports.deleteUser = (req, res, next) => {
                             })
                             return
                         }
-                        db.query(deleteDislikes, (error, results, fields) => {
+                        db.query(deleteUser, (error, results, fields) => {
                             if (error) {
                                 res.status(400).json({
                                     error: error

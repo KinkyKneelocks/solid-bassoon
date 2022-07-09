@@ -3,7 +3,12 @@ import placeholder from "../Images/avatar-placeholder.webp"
 
 
 const Avatar = (props) => {
-    let avatarUrl = ( props.pic ? props.pic : placeholder )
+    let avatarUrl
+    if (props.pic !== 'null') {
+        avatarUrl = ( props.pic ? props.pic : placeholder )
+    } else {
+        avatarUrl = placeholder
+    }
     return (
         <div className="avatar">
             <img src={avatarUrl} className="avatar__pic" />            
