@@ -18,7 +18,7 @@ const db = sql.createConnection(sqlConfig);
 
 exports.getAllPosts = (req, res, next) => {    
     try {
-        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, (SELECT COUNT(Comments.userName) FROM Comments WHERE Comments.postId = Posts.postId) AS commentCount, (SELECT COUNT(Likes.userName) FROM Likes WHERE Likes.postId = Posts.postId) AS likeCount, (SELECT COUNT(Dislikes.userName) FROM Likes WHERE Dislikes.postId = Posts.postId) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Likes.userName = '${req.username}') AS disliked
+        const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, (SELECT COUNT(Comments.userName) FROM Comments WHERE Comments.postId = Posts.postId) AS commentCount, (SELECT COUNT(Likes.userName) FROM Likes WHERE Likes.postId = Posts.postId) AS likeCount, (SELECT COUNT(Dislikes.userName) FROM Dislikes WHERE Dislikes.postId = Posts.postId) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Dislikes.userName = '${req.username}') AS disliked
         FROM Posts 
         LEFT JOIN Comments ON Comments.postId = Posts.PostId 
         LEFT JOIN Users ON Users.userName = Posts.userName 
@@ -45,7 +45,7 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-    const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, (SELECT COUNT(Comments.userName) FROM Comments WHERE Comments.postId = Posts.postId) AS commentCount, (SELECT COUNT(Likes.userName) FROM Likes WHERE Likes.postId = Posts.postId) AS likeCount, (SELECT COUNT(Dislikes.userName) FROM Likes WHERE Dislikes.postId = Posts.postId) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Likes.userName = '${req.username}') AS disliked
+    const myQuery = `SELECT Posts.postId, Posts.Title, Posts.Description, Posts.imgUrl, Posts.userName, Posts.createdOn, (SELECT COUNT(Comments.userName) FROM Comments WHERE Comments.postId = Posts.postId) AS commentCount, (SELECT COUNT(Likes.userName) FROM Likes WHERE Likes.postId = Posts.postId) AS likeCount, (SELECT COUNT(Dislikes.userName) FROM Dislikes WHERE Dislikes.postId = Posts.postId) AS DislikeCount,  Users.profilepic, EXISTS (SELECT Likes.likeId FROM Likes WHERE Likes.postId = Posts.postId AND Likes.userName = '${req.username}') AS liked, EXISTS (SELECT Dislikes.dislikeId FROM Dislikes WHERE Dislikes.postId = Posts.postId AND Dislikes.userName = '${req.username}') AS disliked
     FROM Posts 
     LEFT JOIN Comments ON Comments.postId = Posts.PostId 
     LEFT JOIN Users ON Users.userName = Posts.userName 

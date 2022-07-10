@@ -30,11 +30,7 @@ db.connect((err) => {
 
 
 
-/*
-let myQuery = `SELECT * FROM Likes`;
-*/
-
-let myQuery = `SELECT * FROM Users;`;
+let myQuery = `SELECT * FROM Dislikes`;
 
 db.query(myQuery, 
     (error, results, fields) => {
@@ -44,6 +40,8 @@ db.query(myQuery,
         }
         console.log(results);   
 }) 
+
+
 
 
 

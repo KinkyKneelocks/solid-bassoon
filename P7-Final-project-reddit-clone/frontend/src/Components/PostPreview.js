@@ -11,6 +11,7 @@ const PostPreview = (props) => {
     const [dislikes, setDislikes] = useState(props.dislikes)
     const [ownLike, setOwnLike] = useState(props.ownLike)
     const [ownDislike, setOwnDislike] = useState(props.ownDislike)
+    const [isPending, setIsPending] = useState(false)
     let createdOnDate
     const { user, setUser } = useContext(UserContext)
     const commentButtonLabel = (commentNumber) => {
@@ -42,56 +43,175 @@ const PostPreview = (props) => {
         if (ownDislike == 0 && ownLike == 0 && reactionvalue == 1) /*User wants to like */ { 
             payload.previous = 0
             payload.desired = 1
-            setLikes(prevLikes => prevLikes +1) 
-            setOwnLike(1)
+            fetch('http://localhost:3000/api/posts/reaction', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                } else {
+                    setIsPending(false)
+                    throw Error('Could not complete reaction action')
+                }
+            })
+            .then((data) => {
+                setLikes(prevLikes => prevLikes +1) 
+                setOwnLike(1)
+                setIsPending(false)
+                console.log(data)
+            })
+            .catch((Error) => {
+                console.log(Error)
+            })
+
         } else
         if (ownDislike == 0 && ownLike == 0 && reactionvalue == -1) /*User wants to dislike */ { 
             payload.previous = 0
             payload.desired = -1
-            setDislikes(prevDisikes => prevDisikes +1) 
-            setOwnDislike(1)
+            fetch('http://localhost:3000/api/posts/reaction', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                } else {
+                    setIsPending(false)
+                    throw Error('Could not complete reaction action')
+                }
+            })
+            .then((data) => {
+                setDislikes(prevDisikes => prevDisikes +1) 
+                setOwnDislike(1)
+                setIsPending(false)
+                console.log(data)
+            })
+            .catch((Error) => {
+                console.log(Error)
+            })
+
         } else 
         if (ownDislike == 0 && ownLike == 1 && reactionvalue == 1) /*User wants to remove like */ { 
             payload.previous = 1
             payload.desired = 0
-            setLikes(prevLikes => prevLikes -1) 
-            setOwnLike(0)
+            fetch('http://localhost:3000/api/posts/reaction', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                } else {
+                    setIsPending(false)
+                    throw Error('Could not complete reaction action')
+                }
+            })
+            .then((data) => {
+                setLikes(prevLikes => prevLikes -1) 
+                setOwnLike(0)
+                setIsPending(false)
+                console.log(data)
+            })
+            .catch((Error) => {
+                console.log(Error)
+            })
+
         } else 
         if (ownDislike == 1 && ownLike == 0 && reactionvalue == -1) /*User wants to remove dislike */ {
             payload.previous = -1 
             payload.desired = 0
-            setDislikes(prevDisikes => prevDisikes -1)
-            setOwnDislike(0)
+            fetch('http://localhost:3000/api/posts/reaction', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                } else {
+                    setIsPending(false)
+                    throw Error('Could not complete reaction action')
+                }
+            })
+            .then((data) => {
+                setDislikes(prevDisikes => prevDisikes -1)
+                setOwnDislike(0)
+                setIsPending(false)
+                console.log(data)
+            })
+            .catch((Error) => {
+                console.log(Error)
+            })
+
         } else 
         if (ownDislike == 1 && ownLike == 0 && reactionvalue == 1) /*User has disliked and wants to like */ { 
             payload.previous = -1
             payload.desired = 1
-            setLikes(prevLikes => prevLikes +1) 
-            setDislikes(prevDisikes => prevDisikes -1)
-            setOwnLike(1)
-            setOwnDislike(0)
+            fetch('http://localhost:3000/api/posts/reaction', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                } else {
+                    setIsPending(false)
+                    throw Error('Could not complete reaction action')
+                }
+            })
+            .then((data) => {
+                setLikes(prevLikes => prevLikes +1) 
+                setDislikes(prevDisikes => prevDisikes -1)
+                setOwnLike(1)
+                setOwnDislike(0)
+                setIsPending(false)
+                console.log(data)
+            })
+            .catch((Error) => {
+                console.log(Error)
+            })
+
         } else
         if (ownDislike == 0 && ownLike == 1 && reactionvalue == -1) /*User has liked and wants to dislike */ { 
             payload.previous = 1
             payload.desired = -1
-            setLikes(prevLikes => prevLikes -1) 
-            setDislikes(prevDisikes => prevDisikes +1)
-            setOwnLike(0)
-            setOwnDislike(1)
-        } 
+            fetch('http://localhost:3000/api/posts/reaction', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json()
+                } else {
+                    setIsPending(false)
+                    throw Error('Could not complete reaction action')
+                }
+            })
+            .then((data) => {
+                setLikes(prevLikes => prevLikes -1) 
+                setDislikes(prevDisikes => prevDisikes +1)
+                setOwnLike(0)
+                setOwnDislike(1)
+                setIsPending(false)
+                console.log(data)
+            })
+            .catch((Error) => {
+                console.log(Error)
+            })
 
-        fetch('http://localhost:3000/api/posts/reaction', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(payload)
-        })
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            console.log(data)
-        })
+        } 
     }
 
     const deletePost = (event) => {
@@ -139,10 +259,10 @@ const PostPreview = (props) => {
                 }                
                 
                 <div className="post__buttons">
-                    <div onClick={toggleReaction} data-reactionvalue="1" className={ownLike == 1 ? "post__buttons__element post__buttons__element__active-like" : "post__buttons__element"}>
+                    <div onClick={isPending ? undefined : toggleReaction} data-reactionvalue="1" className={ownLike == 1 ? "post__buttons__element post__buttons__element__active-like" : "post__buttons__element"}>
                         <FontAwesomeIcon icon={faThumbsUp} /> {!likes ? '0' : likes}
                     </div>
-                    <div onClick={toggleReaction} data-reactionvalue="-1" className={ownDislike == 1 ? "post__buttons__element post__buttons__element__active-dislike" : "post__buttons__element"}>
+                    <div onClick={isPending ? undefined : toggleReaction} data-reactionvalue="-1" className={ownDislike == 1 ? "post__buttons__element post__buttons__element__active-dislike" : "post__buttons__element"}>
                         <FontAwesomeIcon icon={faThumbsDown} /> {!dislikes ? '0' : dislikes}
                     </div>
                     <div className="post__buttons__comments post__buttons__element">
